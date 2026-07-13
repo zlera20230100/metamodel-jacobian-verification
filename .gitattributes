@@ -1,0 +1,5 @@
+*.npz binary
+*.pdf binary
+*.png binary
+simpat_revision/openems_*.log binary
+simpat_revision/graphical_abstract_simpat.svg -whitespace

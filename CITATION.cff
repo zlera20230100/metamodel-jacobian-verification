@@ -1,8 +1,20 @@
 cff-version: 1.2.0
-message: "If you use this software or data, please cite it as below."
-title: "Reproducibility code and data for: Direction, Not Magnitude: A Portable, Solver-Free Reliability Gate for Differentiable-Surrogate Design Gradients"
+message: "If you use this software or data, cite the archived release below."
+title: "Reproducibility supplement for: Reference-Calibrated Selective Verification of Surrogate Design Jacobians under Finite Simulation Budgets"
 type: software
+version: 2.0.0
+date-released: 2026-07-12
+doi: 10.5281/zenodo.21005573
+repository-code: "https://github.com/zlera20230100/direction-not-magnitude"
+url: "https://doi.org/10.5281/zenodo.21005573"
 license: MIT
+keywords:
+  - metamodel verification
+  - surrogate design Jacobian
+  - simulation-based optimization
+  - selective prediction
+  - risk-coverage
+  - reference-gradient verification
 authors:
   - family-names: Qin
     given-names: Xuan

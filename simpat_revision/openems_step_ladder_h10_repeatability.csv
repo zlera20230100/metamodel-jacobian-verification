@@ -1,0 +1,7 @@
+zone,reported_h0p10_gradient,repeat_h0p10_gradient,absolute_difference,relative_difference,sign_match,reported_source,repeat_source,mesh_refinement_available
+0,-0.4690923648807299,-0.4596667642113772,0.009425600669352718,0.020093272402225613,1,openems_step_ladder_h10.csv,openems_step_ladder_raw.csv,0
+1,-0.4934201333116661,-0.4934201333116661,0.0,0.0,1,openems_step_ladder_h10.csv,openems_step_ladder_raw.csv,0
+2,-0.49382650005139084,-0.49382650005139084,0.0,0.0,1,openems_step_ladder_h10.csv,openems_step_ladder_raw.csv,0
+3,-0.49263078444642616,-0.49263078444642616,0.0,0.0,1,openems_step_ladder_h10.csv,openems_step_ladder_raw.csv,0
+4,-0.543436395401109,-0.5339996150760129,0.009436780325096095,0.017365013467916208,1,openems_step_ladder_h10.csv,openems_step_ladder_raw.csv,0
+5,-0.5645504173975269,-0.5712087830006141,0.006658365603087191,0.01165662328949174,1,openems_step_ladder_h10.csv,openems_step_ladder_raw.csv,0
