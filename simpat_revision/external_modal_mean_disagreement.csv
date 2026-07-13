@@ -1,0 +1,4 @@
+dataset,NQ,K,n_components,modal_ties,modal_tie_fraction,non_tie_modal_mean_mismatch,non_tie_modal_mean_mismatch_fraction,ensemble_mean_zero_components,exact_zero_member_gradients,mean_aligned_score_differs_from_modal,tau,accepted_components,tau_acceptance_set_difference,mean_direction_false_acceptances,modal_direction_false_acceptances,false_acceptances_with_modal_mean_mismatch,mean_false_acceptances_rescued_by_modal,mean_correct_accepted_but_modal_wrong
+TMM easy (near-saturated),80,11,880,5,0.00568181818182,3,0.00340909090909,0,0,3,0.9,844,0,13,13,0,0,0
+TMM stressed,100,11,1100,43,0.0390909090909,13,0.0118181818182,0,0,13,0.9,814,0,109,109,0,0,0
+Heat/Poisson stressed,100,16,1600,41,0.025625,15,0.009375,0,0,15,0.9,1278,0,62,62,0,0,0

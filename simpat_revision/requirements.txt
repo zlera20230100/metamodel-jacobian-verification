@@ -1,0 +1,12 @@
+matplotlib>=3.8
+numpy>=1.26
+pandas>=2.1
+scipy>=1.11
+# Used by archived generator/redraw scripts; not needed by the core CSV replay.
+scikit-learn>=1.4
+# Used only for optional external-surrogate reconstruction/retraining.
+torch>=2.2
+
+# openEMS and CSXCAD are optional system-level bindings used only for the
+# expensive antenna rerun. They are not required for the frozen-result replay,
+# external retraining, or TMM/heat reference-label verification.

@@ -1,0 +1,4 @@
+dataset,operating_rule,K,N_train_simulator_labels,N_cal_queries,calibration_reference_evaluations,selective_reference_evaluations_per_query,complete_FD_reference_evaluations_per_query,sentinel_reference_evaluations_per_query,net_reference_evaluations_saved_per_query,calibration_only_break_even_queries,gross_data_break_even_queries_excluding_fit_time,fit_time_reference_equivalent
+TMM easy (near-saturated),fixed mean-aligned sign threshold 0.9,11,600,40,880,0.9,22,0,21.1,42,71,user-supplied for deployment; unavailable in frozen audit
+TMM stressed,fixed mean-aligned sign threshold 0.9,11,250,50,1100,5.72,22,0,16.28,68,83,user-supplied for deployment; unavailable in frozen audit
+Heat/Poisson stressed,fixed mean-aligned sign threshold 0.9,16,70,50,1600,6.44,32,0,25.56,63,66,user-supplied for deployment; unavailable in frozen audit

@@ -12,10 +12,10 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Rectangle
 DIR = os.path.dirname(os.path.abspath(__file__))
 
 # shared style settings and helpers
-NEU = '#444444'   # neutral grey
-SIG = '#1f5fa6'   # signal blue
-ACC = '#c0392b'   # accent red
-GRN = '#1e7a45'   # green
+NEU = '#4D4D4D'   # neutral/reference
+SIG = '#3775BA'   # Nature-family primary blue
+ACC = '#C76B3C'   # single muted warm accent
+GRN = '#A9C5DF'   # light blue (legacy variable name)
 
 def apply_style():
     plt.rcParams.update({
@@ -190,7 +190,10 @@ def make_forward():
     s11 = [float(cd[o + '_s11_24']) for o in order]
     grp = [NEU] + [SIG] * 5 + [ACC] * 4
     grp = grp[:len(order)]
-    b.bar(range(len(order)), s11, color=grp, width=0.7)
+    bars = b.bar(range(len(order)), s11, color=grp, edgecolor='black', linewidth=0.6, width=0.7)
+    group_hatches = ['///'] + ['...'] * 5 + ['\\\\'] * 4
+    for patch, hatch in zip(bars, group_hatches[:len(order)]):
+        patch.set_hatch(hatch)
     mean = np.mean(s11)
     b.axhline(mean, ls=(0, (5, 4)), color='#404040', lw=1.4, zorder=1)
     # label hugs its guide line: right-aligned at the line's right end, ~half a
@@ -200,9 +203,9 @@ def make_forward():
     tr = offset_copy(b.get_yaxis_transform(), fig=fig, x=-2, y=3, units='points')
     b.text(1.0, mean, f'mean {mean:.1f} dB', transform=tr, ha='right',
            va='bottom', fontsize=7.6, color='#404040', style='italic')
-    b.legend(handles=[mpatches.Patch(color=NEU, label='uniform'),
-                      mpatches.Patch(color=SIG, label='phase-gradient codes'),
-                      mpatches.Patch(color=ACC, label='surrogate codes')],
+    b.legend(handles=[mpatches.Patch(facecolor=NEU, edgecolor='black', hatch='///', label='uniform'),
+                      mpatches.Patch(facecolor=SIG, edgecolor='black', hatch='...', label='phase-gradient codes'),
+                      mpatches.Patch(facecolor=ACC, edgecolor='black', hatch='\\\\', label='surrogate codes')],
              fontsize=8, frameon=False, loc='lower center',
              bbox_to_anchor=(0.5, 1.0), ncol=3, columnspacing=1.3, handletextpad=0.4)
     b.set_xticks(range(len(order)))

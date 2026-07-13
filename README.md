@@ -1,93 +1,121 @@
-# Reproducibility code and data
+# Reference-Calibrated Verification of Metamodel Design Jacobians under Finite Simulation Budgets
 
-**Direction, Not Magnitude: A Portable, Solver-Free Reliability Gate for Differentiable-Surrogate Design Gradients**
+Reproducibility code and data for the revised manuscript prepared for submission to
+*Simulation Modelling Practice and Theory*.
 
-Xuan Qin, Xuan Shi, Nimako Samuel Boateng, Bokai Huang, Shengjun Wu, Kai You, Long Zhang\* (corresponding: 20230100@huat.edu.cn)
-Hubei University of Automotive Technology, Shiyan 442002, China
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21005573.svg)](https://doi.org/10.5281/zenodo.21005573)
+[![release](https://img.shields.io/github/v/release/zlera20230100/direction-not-magnitude)](https://github.com/zlera20230100/direction-not-magnitude/releases)
 
-This repository contains the figure generators and the frozen result data (`.npz`) needed to
-reproduce every figure in the paper, together with the analysis and experiment scripts that
-produced that data. Every figure can be regenerated from the provided `.npz` without rerunning any
-solver or training.
+Xuan Qin, Xuan Shi, Nimako Samuel Boateng, Bokai Huang, Shengjun Wu,
+Kai You, and Long Zhang (corresponding author: 20230100@huat.edu.cn)
 
----
+## Which files should be used?
 
-## 1. Environment
+The authoritative **v2.0.0 SIMPAT revision package** is in
+[`simpat_revision/`](simpat_revision/). It contains the frozen arrays,
+reference-gradient verification, risk--coverage and finite-budget analyses,
+repeated calibration and training audits, matched-cost multistep optimization,
+openEMS step-ladder records, deterministic figure sources, and an evidence
+manifest used by the revised manuscript.
 
-- Python 3.11
-- NumPy, SciPy, scikit-learn, Matplotlib (Times New Roman / STIX for figures)
-- PyTorch 2.6.0 (only for the surrogate/ensemble experiment scripts; not needed to redraw figures)
-- h5py and the openEMS Python bindings (`CSXCAD` / `openEMS`) — only for the full-wave scripts
+Files at the repository root reproduce the original v1.0.0 release and remain
+available for provenance. They should not be used to reconstruct the revised
+SIMPAT claims. The immutable v1 tree is also available at tag
+[`v1.0.0`](https://github.com/zlera20230100/direction-not-magnitude/tree/v1.0.0).
 
-Set `KMP_DUPLICATE_LIB_OK=TRUE` on Windows if you hit an OpenMP duplicate-runtime error.
-Run scripts from inside this folder (they load their `.npz` inputs by relative name).
+## Evidence represented by v2.0.0
 
----
+- Three independently implemented reference regimes provide 3,580 external
+  design-gradient components: near-saturated TMM, stressed TMM, and stressed
+  heat/Poisson.
+- Every external reference sign passes the declared step-size and independent-
+  derivative screen. The heat benchmark also passes the 160/320/640-cell sign
+  audit.
+- Mean-aligned sign agreement, ensemble signal-to-noise ratio (SNR), and
+  magnitude are compared against the same labels and budgets. SNR has the
+  highest ROC AUC in both TMM regimes; magnitude is highest for heat/Poisson;
+  sign ordering has the smallest fixed-budget assembled-gradient error-
+  frontier area in all three.
+- At the worked mean-aligned-sign threshold 0.9, accepted coverage/sign-error
+  risk is 95.9%/1.5%, 74.0%/13.4%, and 79.9%/4.9%. Correcting rejected
+  components costs 0.90/22, 5.72/22, and 6.44/32 reference evaluations per
+  query relative to complete central finite differences.
+- Repeated-split calibration, independent training repeats, random tie
+  resolution, ensemble-size sensitivity, and amortized reference-cost analyses
+  expose how the operating point changes under finite data and finite budgets.
+- In the matched-cost 20-step TMM audit, random, sign, SNR, and magnitude
+  allocation each use exactly 240 reference calls per start. No deployable
+  score ordering dominates random allocation across all tested trajectory
+  outcomes; this boundary result is retained rather than hidden.
+- The antenna step ladder is a failure-aware boundary: all six openEMS
+  aperture derivatives reverse sign at the largest tested step. These
+  derivatives are unresolved and excluded from AUC, calibration, risk,
+  cost-saving, and hybrid-gradient-error claims.
 
-## 2. Quick reproduction (figures from the provided data)
+## Quick reproduction
+
+Use Python 3.11 or newer:
 
 ```bash
-python fig_unified.py        # -> fig_method, fig_forward, fig_jacobian, fig_inert, fig_remedy
-python fig_reliability.py        # -> fig_reliability
-python fig_reliability_calib.py  # -> fig_reliability_calib
-python fig_endtoend.py           # -> fig_endtoend
-python fig_extbench.py           # -> fig_extbench
-python fig_hybrid_gradient.py    # -> fig_hybrid_gradient
+cd simpat_revision
+python -m pip install -r requirements.txt
+
+# Frozen-result replay and score comparison
+python analyze_external_baselines.py --analysis-dir . --package-dir .
+
+# Independent reference-gradient checks (3,580 components)
+python reference_gradient_verification.py --data-dir . --out-dir .
+
+# Worked risk--coverage and central-FD cost accounting
+python risk_coverage_simpat.py --data-dir . --out-dir .
+
+# Stability and matched-cost trajectory audits
+python repeated_split_calibration.py
+python tie_sensitivity.py
+python subensemble_sensitivity.py
+python training_repeat_audit.py
+python break_even_reference_cost.py
+python multistep_tmm_budget_optimization.py
+
+# Deterministic publication figure
+python graphical_abstract_simpat.py
 ```
 
-These read the frozen `.npz` files and write the PDF/PNG figures used in the manuscript.
+The external-score analysis uses 10,000 query-cluster bootstrap replicates.
+Optional reconstruction of the small external surrogate ensembles is
+documented in [`simpat_revision/README.md`](simpat_revision/README.md).
 
----
+## Evidence tiers and limits
 
-## 3. Figure -> generator -> data
+1. **Frozen-result replay** requires no retraining or reference-simulator call.
+2. **External-member reconstruction** retrains only the small public benchmark
+   ensembles and checks them against frozen accepted artifacts.
+3. **Reference-label verification** reconstructs the TMM and heat queries and
+   compares central differences with analytic or complex-step/grid
+   derivatives.
+4. **Full-wave provenance** includes the completed openEMS step ladder and
+   logs, but rerunning it requires the full project tree and local openEMS/
+   CSXCAD bindings.
 
-| Figure | Generator | Main data file(s) |
+The project-specific device PINN training framework is not bundled. Device
+figure arrays are frozen-output redraw inputs, and no experimental antenna
+validation is claimed.
+
+## Citation and versioning
+
+Use the concept DOI for the latest version and all-version citation:
+
+> https://doi.org/10.5281/zenodo.21005573
+
+| Release | Role | DOI |
 |---|---|---|
-| Method / device | `fig_unified.py` | `fpc_result.npz`, `hq_pattern.npz`, `movable.npz` |
-| Forward accuracy | `fig_unified.py` | `fpc_result.npz`, `hq_pattern.npz` |
-| Gradient-reliability map | `fig_unified.py` | `zones_multiseed.npz`, `grad_fullwave.npz` |
-| Reliability indicator | `fig_reliability.py` | `reliability.npz`, `mcdropout.npz`, `reliability_ci.npz` |
-| Calibration / ensemble size | `fig_reliability_calib.py` | `reliability_calib.npz` |
-| End-to-end safe step | `fig_endtoend.py` | `endtoend.npz` |
-| External benchmark (TMM) | `fig_extbench.py` | `extbench_tmm.npz` |
-| Cost-optimal hybrid gradient | `fig_hybrid_gradient.py` | `hybrid_gradient.npz` |
-| Operating boundary (inert) | `fig_unified.py` | `movable.npz`, `closure_directive.npz` |
-| Resonance-wall remedies | `fig_unified.py` | (values in script) |
+| v2.0.0 | Current SIMPAT revision package | see the current version under the concept DOI |
+| v1.0.0 | Legacy reproducibility snapshot | https://doi.org/10.5281/zenodo.21005574 |
 
----
+Release-specific metadata are recorded in [`CITATION.cff`](CITATION.cff) and
+[`.zenodo.json`](.zenodo.json). Zenodo assigns a separate DOI to every
+published version while retaining the concept DOI above.
 
-## 4. Experiment / analysis scripts
+## License
 
-Self-contained (run anywhere with NumPy/PyTorch):
-
-```bash
-python hybrid_gradient.py     # reliability-gated hybrid gradient: cost-accuracy frontier -> hybrid_gradient.npz
-python hybrid_robust.py       # frontier under Gaussian/Student-t/Laplace/correlated-seed noise
-python hybrid_decouple.py     # label-decoupled AUC + ensemble-variance baseline
-python extbench_tmm.py         # thin-film transfer-matrix external benchmark -> extbench_tmm.npz
-python reliability_calib.py    # controlled reliability-spectrum calibration -> reliability_calib.npz
-python reliability.py          # ensemble sign-agreement / SNR indicator + AUC -> reliability.npz
-python reliability_ci.py       # bootstrap CI for the AUC -> reliability_ci.npz
-python grad_fullwave.py        # full-wave finite-difference gradient audit -> grad_fullwave.npz
-python endtoend.py             # trust->step->verify loop on a synthetic testbed -> endtoend.npz
-python movable.py              # responsive/null control study -> movable.npz
-python closure_directive.py    # directive full-wave closure / inertness check -> closure_directive.npz
-python openems_fpc.py          # full-wave FPC reference (openEMS)
-```
-
-Require the project PINN framework (`pinn_model.py`, `config.py`, `main.py`, `visualizer.py`,
-**not bundled here**; the figures above do not need them):
-
-```bash
-python zones_multiseed.py      # per-zone design Jacobian over multiple PINN seeds -> zones_multiseed.npz
-python mcdropout.py            # MC-dropout uncertainty baseline -> mcdropout.npz
-python train_hq.py             # high-Q PINN pattern -> hq_pattern.npz
-```
-
----
-
-## 5. Notes
-
-- All results are simulation-based; the full-wave reference (openEMS / a second solver) is the baseline.
-- Seeds and settings are fixed inside each script and listed in the manuscript's reproducibility table.
-- License: MIT (see `LICENSE`). Citation metadata: `CITATION.cff`; archival metadata: `.zenodo.json`.
+MIT; see [`LICENSE`](LICENSE).

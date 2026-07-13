@@ -1,0 +1,37 @@
+dataset,method,method_label,cosine_target,minimum_B_component_checks,minimum_reference_evaluations,achieved_mean_cosine,K,all_fd_reference_evaluations
+TMM easy (near-saturated),mean_aligned_sign,Mean-aligned sign,0.9,0,0,0.995746075819,11,22
+TMM easy (near-saturated),mean_aligned_sign,Mean-aligned sign,0.95,0,0,0.995746075819,11,22
+TMM easy (near-saturated),mean_aligned_sign,Mean-aligned sign,0.99,0,0,0.995746075819,11,22
+TMM easy (near-saturated),sign_agreement,Modal sign agreement,0.9,0,0,0.995746075819,11,22
+TMM easy (near-saturated),sign_agreement,Modal sign agreement,0.95,0,0,0.995746075819,11,22
+TMM easy (near-saturated),sign_agreement,Modal sign agreement,0.99,0,0,0.995746075819,11,22
+TMM easy (near-saturated),snr,SNR $|\bar g|/s$,0.9,0,0,0.995746075819,11,22
+TMM easy (near-saturated),snr,SNR $|\bar g|/s$,0.95,0,0,0.995746075819,11,22
+TMM easy (near-saturated),snr,SNR $|\bar g|/s$,0.99,0,0,0.995746075819,11,22
+TMM easy (near-saturated),magnitude,Magnitude $|\bar g|$,0.9,0,0,0.995746075819,11,22
+TMM easy (near-saturated),magnitude,Magnitude $|\bar g|$,0.95,0,0,0.995746075819,11,22
+TMM easy (near-saturated),magnitude,Magnitude $|\bar g|$,0.99,0,0,0.995746075819,11,22
+TMM stressed,mean_aligned_sign,Mean-aligned sign,0.9,7,14,0.902542120478,11,22
+TMM stressed,mean_aligned_sign,Mean-aligned sign,0.95,10,20,0.961614742597,11,22
+TMM stressed,mean_aligned_sign,Mean-aligned sign,0.99,11,22,0.999999974789,11,22
+TMM stressed,sign_agreement,Modal sign agreement,0.9,7,14,0.902741239383,11,22
+TMM stressed,sign_agreement,Modal sign agreement,0.95,10,20,0.961733210998,11,22
+TMM stressed,sign_agreement,Modal sign agreement,0.99,11,22,0.999999974789,11,22
+TMM stressed,snr,SNR $|\bar g|/s$,0.9,7,14,0.907325248427,11,22
+TMM stressed,snr,SNR $|\bar g|/s$,0.95,11,22,0.999999974789,11,22
+TMM stressed,snr,SNR $|\bar g|/s$,0.99,11,22,0.999999974789,11,22
+TMM stressed,magnitude,Magnitude $|\bar g|$,0.9,8,16,0.912038831423,11,22
+TMM stressed,magnitude,Magnitude $|\bar g|$,0.95,11,22,0.999999974789,11,22
+TMM stressed,magnitude,Magnitude $|\bar g|$,0.99,11,22,0.999999974789,11,22
+Heat/Poisson stressed,mean_aligned_sign,Mean-aligned sign,0.9,0,0,0.950911527565,16,32
+Heat/Poisson stressed,mean_aligned_sign,Mean-aligned sign,0.95,0,0,0.950911527565,16,32
+Heat/Poisson stressed,mean_aligned_sign,Mean-aligned sign,0.99,14,28,0.991815261393,16,32
+Heat/Poisson stressed,sign_agreement,Modal sign agreement,0.9,0,0,0.950911527565,16,32
+Heat/Poisson stressed,sign_agreement,Modal sign agreement,0.95,0,0,0.950911527565,16,32
+Heat/Poisson stressed,sign_agreement,Modal sign agreement,0.99,14,28,0.99178458202,16,32
+Heat/Poisson stressed,snr,SNR $|\bar g|/s$,0.9,0,0,0.950911527565,16,32
+Heat/Poisson stressed,snr,SNR $|\bar g|/s$,0.95,0,0,0.950911527565,16,32
+Heat/Poisson stressed,snr,SNR $|\bar g|/s$,0.99,14,28,0.992462617458,16,32
+Heat/Poisson stressed,magnitude,Magnitude $|\bar g|$,0.9,0,0,0.950911527565,16,32
+Heat/Poisson stressed,magnitude,Magnitude $|\bar g|$,0.95,0,0,0.950911527565,16,32
+Heat/Poisson stressed,magnitude,Magnitude $|\bar g|$,0.99,14,28,0.99144871995,16,32

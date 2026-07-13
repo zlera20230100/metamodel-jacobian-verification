@@ -1,0 +1,4 @@
+benchmark,frozen_components,retained_after_reference_verification,removed_as_unresolved_or_sign_unstable,operational_score,auc_before_resolution_screen,auc_after_resolution_screen,verified_tau_0p9_coverage,verified_tau_0p9_false_trust_risk,labels_unchanged
+TMM_easy,880,880,0,mean_aligned_sign,0.9056002682763246,0.9056002682763246,0.9590909090909091,0.015402843601895734,1
+TMM_stressed,1100,1100,0,mean_aligned_sign,0.7240892822668072,0.7240892822668072,0.74,0.1339066339066339,1
+heat_Poisson,1600,1600,0,mean_aligned_sign,0.7622432568475072,0.7622432568475072,0.79875,0.048513302034428794,1
