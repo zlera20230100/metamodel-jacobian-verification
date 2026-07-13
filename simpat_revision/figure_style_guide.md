@@ -1,4 +1,4 @@
-# Figure colour contract
+# Figure style guide
 
 The manuscript uses one colour vocabulary across schematics, curves, markers,
 and bars. Colour is never the only identifier; line style, marker shape, or
@@ -6,7 +6,7 @@ hatching is retained wherever series must remain distinguishable in grayscale.
 
 | Role | Colour | Hex |
 |---|---|---|
-| proposed method, surrogate signal, or primary curve | Nature blue | `#3775BA` |
+| primary analysis, surrogate signal, or main curve | blue | `#3775BA` |
 | second quantitative series | medium blue | `#6B9AC4` |
 | third quantitative series or second physics family | light blue | `#A9C5DF` |
 | pale comparison bar or uncertainty support | pale blue | `#DCE8F1` |
@@ -14,9 +14,9 @@ hatching is retained wherever series must remain distinguishable in grayscale.
 | reference, bound, or neutral context | dark grey | `#4D4D4D` |
 | complete-FD or background support | light grey | `#CFCECE` |
 
-The page therefore uses one cool blue family, neutral grey, and one warm
-accent. Green, yellow, saturated red, and unrelated categorical palettes are
-not used. In bar charts, series are additionally separated by the same hatch
+The figures use one blue family, neutral grey, and one warm accent. Green,
+yellow, saturated red, and unrelated categorical palettes are not used. In bar
+charts, series are also separated by the same hatch
 sequence (`///`, `...`, `\\`) and thin black edges.
 
 All plotting scripts use Times New Roman for Latin text, STIX-flavoured math,

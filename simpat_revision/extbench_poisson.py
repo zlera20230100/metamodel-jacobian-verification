@@ -19,7 +19,7 @@
 #   BVP solve (relative step; 2K solves). The surrogate predicts J(g) directly; its autodiff dJ/dg
 #   is what the gate must vet.
 #
-# REGIME NOTE (honest): a smooth, well-conditioned conduction design is *too easy* for this test --
+# Regime note: a smooth, well-conditioned conduction design is too easy for this test.
 # a cheap MLP already gets ~100% of gradient-component SIGNS right, so there are no sign-wrong
 # components, the gate AUC is undefined, and the allocator has nothing to save. (We log this easy
 # regime for the record.) The MAIN benchmark therefore deliberately stresses the problem into a
@@ -224,10 +224,10 @@ def run_benchmark(tag, K, q_sharp, NS, span, roam, NQ=100, gtrue_seed=3, verbose
 main = run_benchmark(tag='main', K=16, q_sharp=3.0, NS=70, span=0.8, roam=0.25, NQ=100)
 
 # ----------------------------------------------------------------------------------------------
-# (B) Easy regime, logged for honesty: well-conditioned conduction is near-saturated (signs already
+# (B) Easy regime: well-conditioned conduction is near-saturated (signs already
 #     ~100% correct, gate AUC undefined, nothing for the allocator to save).
 # ----------------------------------------------------------------------------------------------
-print("\n----- honesty check: easy/well-conditioned conduction regime (for the record) -----")
+print("\n----- easy/well-conditioned conduction regime -----")
 easy = run_benchmark(tag='easy', K=8, q_sharp=1.0, NS=400, span=0.45, roam=0.10, NQ=60)
 
 # ----------------------------------------------------------------------------------------------

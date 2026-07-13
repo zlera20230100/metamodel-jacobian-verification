@@ -1,6 +1,7 @@
 """Reproducible checks for the scale-invariance/bias-blindness appendix.
 
-The script produces ``fig_toy_simpat.pdf`` and ``fig_toy_simpat.png`` next
+The script produces ``fig_scale_bias_analysis.pdf`` and
+``fig_scale_bias_analysis.png`` next
 to itself.  It deliberately separates two statements that are easy to
 conflate:
 
@@ -311,8 +312,8 @@ def main() -> None:
         axis.tick_params(direction="out", length=3.5, width=0.8)
 
     fig.tight_layout(w_pad=2.2)
-    pdf_path = HERE / "fig_toy_simpat.pdf"
-    png_path = HERE / "fig_toy_simpat.png"
+    pdf_path = HERE / "fig_scale_bias_analysis.pdf"
+    png_path = HERE / "fig_scale_bias_analysis.png"
     fig.savefig(pdf_path)
     fig.savefig(png_path, dpi=600)
     plt.close(fig)

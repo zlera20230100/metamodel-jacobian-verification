@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# VERIFY the devil's-advocate claim: on this TMM benchmark are the sign-wrong components the SMALL-|grad|
+# Check whether sign-wrong components have small gradient magnitude in this TMM benchmark.
 # ones, so that a magnitude threshold / smallest-|grad|-first ties or beats the gate? Re-runs the exact
 # extbench_tmm pipeline (same seeds) and reports |ad| of sign-wrong vs sign-right, the magnitude AUC,
 # and the smallest-|grad|-first caught curve vs the gate.

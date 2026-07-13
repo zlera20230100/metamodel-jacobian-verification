@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software or data, cite the archived release below."
 title: "Reproducibility supplement for: Reference-Calibrated Verification of Metamodel Design Jacobians under Finite Simulation Budgets"
 type: software
-version: 2.0.0
+version: 2.0.1
 date-released: 2026-07-12
 doi: 10.5281/zenodo.21005573
 repository-code: "https://github.com/zlera20230100/direction-not-magnitude"

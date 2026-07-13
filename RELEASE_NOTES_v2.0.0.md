@@ -6,7 +6,7 @@ Simulation Budgets*.
 
 ## What changed
 
-- Added the authoritative `simpat_revision/` package with 140 curated files.
+- Added the `simpat_revision/` package with 140 curated files.
 - Added ten-member external-gradient artifacts for near-saturated TMM,
   stressed TMM, and stressed heat/Poisson regimes.
 - Added head-to-head mean-aligned sign, SNR, and magnitude comparisons with

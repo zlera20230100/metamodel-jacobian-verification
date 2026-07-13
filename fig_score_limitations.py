@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-# Core figure: DIRECTION is one fixed trust criterion across 3 physics families; MAGNITUDE is not
-# (which magnitude regime is untrustworthy flips: large on the antenna, small on TMM and heat).
-# (a) antenna: the dangerous radiation gradients are large yet sign-unstable -> a magnitude rule trusts them,
-#     the direction gate rejects them. (b) direction works on all three oracles; a "trust large gradients"
-#     magnitude rule works only where sign-wrong gradients happen to be small (TMM, heat) and inverts on the
-#     antenna. All numbers are honest manuscript values; antenna direction AUC=1.00 is the degenerate n=18
-#     small-sample value (labelled). No fabricated numbers.
+"""Compare sign agreement and magnitude across three benchmark families.
+
+Panel (a) shows the small antenna example. Panel (b) reports the archived
+sign-agreement AUC for the antenna, TMM, and heat cases. The antenna value is
+based on 18 components and is labelled as illustrative.
+"""
 import os
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -44,8 +43,8 @@ axA.scatter(mag[rad], sa[rad], s=78, marker='X', facecolor=ACC, edgecolor='k', l
 axA.set_xscale('log'); axA.set_ylim(0.42, 1.06); axA.set_xlim(5e-3, 30)
 axA.set_xlabel(r'per-seed gradient magnitude $|\partial \mathbf{E}/\partial g|$')
 axA.set_ylabel('cross-seed sign-agreement')
-axA.set_title('(a) 24-GHz antenna: the dangerous gradient is large, yet sign-unstable', fontsize=9.5, loc='left')
-axA.annotate('radiation gradients: large magnitude (overlapping the\nresponsive controls) yet sign-unstable, so a\nmagnitude rule accepts them; sign agreement rejects them',
+axA.set_title('(a) 24-GHz antenna: large gradients with unstable signs', fontsize=9.5, loc='left')
+axA.annotate('radiation gradients overlap the responsive controls\nin magnitude but have unstable signs',
              xy=(float(mag[rad].min()), float(sa[rad].min()) + 0.03), xytext=(0.0075, 0.485),
              ha='left', va='center', fontsize=7.4, color=ACC,
              arrowprops=dict(arrowstyle='->', color=ACC, lw=1.0,
@@ -55,7 +54,7 @@ axA.text(0.025, 0.975, f'magnitude AUC {auc_mag_ant:.3f}\ndirection AUC {auc_dir
 axA.legend(fontsize=7.6, loc='upper center', frameon=False, ncol=3, bbox_to_anchor=(0.5, -0.16),
            handletextpad=0.3, columnspacing=1.0)
 
-# ---- Panel (b): direction is one fixed rule across 3 oracles; magnitude's regime flips ----
+# ---- Panel (b): performance across three reference problems ----
 oracles = ['24-GHz\nantenna', 'thin-film\nphotonics', '1-D\nheat']
 dvals = [dir_auc['antenna'], dir_auc['TMM'], dir_auc['heat']]
 x = np.arange(3); w = 0.52
@@ -79,11 +78,11 @@ for xi, (txt, col) in zip(x, mag_verdict):
 axB.legend(fontsize=7.8, loc='upper right', frameon=False)
 
 fig.tight_layout()
-fig.savefig(os.path.join(DIR, 'fig_refutation.pdf'), bbox_inches='tight')
-fig.savefig(os.path.join(DIR, 'fig_refutation.png'), dpi=200, bbox_inches='tight')
+fig.savefig(os.path.join(DIR, 'fig_score_limitations.pdf'), bbox_inches='tight')
+fig.savefig(os.path.join(DIR, 'fig_score_limitations.png'), dpi=200, bbox_inches='tight')
 try:
     from PIL import Image
-    w0, h0 = Image.open(os.path.join(DIR, 'fig_refutation.png')).size
-    print(f'saved fig_refutation: PNG {w0}x{h0}px | direction AUC antenna/TMM/heat = {dvals} | antenna mag-AUC {auc_mag_ant}')
+    w0, h0 = Image.open(os.path.join(DIR, 'fig_score_limitations.png')).size
+    print(f'saved fig_score_limitations: PNG {w0}x{h0}px | direction AUC antenna/TMM/heat = {dvals} | antenna mag-AUC {auc_mag_ant}')
 except Exception:
     print('saved')
