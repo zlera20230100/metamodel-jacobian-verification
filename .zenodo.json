@@ -1,16 +1,20 @@
 {
-  "title": "Reproducibility code and data for: Direction, Not Magnitude: A Portable, Solver-Free Reliability Gate for Differentiable-Surrogate Design Gradients",
+  "title": "Reproducibility supplement for: Reference-Calibrated Selective Verification of Surrogate Design Jacobians under Finite Simulation Budgets",
   "upload_type": "software",
-  "description": "Figure generators and frozen result data reproducing every figure in the paper, with the analysis and experiment scripts that produced the data. Includes the deep-ensemble gradient-reliability gate, its calibration, the MC-dropout comparison, the reliability-gated cost-optimal hybrid gradient, a thin-film transfer-matrix external benchmark, and the full-wave audits. Every figure reproduces from the provided .npz; the PINN device experiments additionally require the project framework, which is not bundled.",
+  "version": "v2.0.0",
+  "publication_date": "2026-07-12",
+  "description": "Authoritative SIMPAT revision package in simpat_revision/: frozen external-member gradients, reference-gradient step and independent-derivative verification for 3,580 components, score comparisons, query-cluster bootstrap risk-coverage analysis, finite reference-budget correction, openEMS step-ladder provenance, and deterministic figure sources. The antenna derivatives remain numerically unresolved and are excluded from quantitative reliability claims. The project-specific device PINN training framework is not bundled.",
   "license": "MIT",
   "access_right": "open",
+  "language": "eng",
   "keywords": [
-    "physics-informed neural network",
-    "deep ensemble",
-    "uncertainty quantification",
-    "differentiable surrogate",
-    "gradient reliability",
-    "coded metasurface antenna"
+    "metamodel verification",
+    "simulation-based optimization",
+    "surrogate design Jacobian",
+    "reference-gradient verification",
+    "selective prediction",
+    "risk-coverage",
+    "finite simulation budget"
   ],
   "creators": [
     {"name": "Qin, Xuan", "affiliation": "Hubei University of Automotive Technology"},

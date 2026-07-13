@@ -1,0 +1,13 @@
+dataset,method,method_label,allocator_relerr_area,allocator_relerr_area_cluster_low,allocator_relerr_area_cluster_high,tie_repetitions
+TMM easy (near-saturated),mean_aligned_sign,Mean-aligned sign,0.211834078782,0.18116050197,0.244712431488,512
+TMM easy (near-saturated),sign_agreement,Modal sign agreement,0.211787293529,0.181069501606,0.244879828986,512
+TMM easy (near-saturated),snr,SNR $|\bar g|/s$,0.229083190688,0.196231168056,0.264033329666,512
+TMM easy (near-saturated),magnitude,Magnitude $|\bar g|$,0.272129754229,0.23111038484,0.316152362531,512
+TMM stressed,mean_aligned_sign,Mean-aligned sign,0.666601015577,0.58037840042,0.759228609272,512
+TMM stressed,sign_agreement,Modal sign agreement,0.666530039226,0.580121130069,0.759600571238,512
+TMM stressed,snr,SNR $|\bar g|/s$,0.715062421564,0.614476459974,0.825075236676,512
+TMM stressed,magnitude,Magnitude $|\bar g|$,0.747462201904,0.644871087502,0.858768659972,512
+Heat/Poisson stressed,mean_aligned_sign,Mean-aligned sign,0.243961009381,0.234998563175,0.25323655685,512
+Heat/Poisson stressed,sign_agreement,Modal sign agreement,0.244049429151,0.235083719927,0.253307945566,512
+Heat/Poisson stressed,snr,SNR $|\bar g|/s$,0.248751667156,0.237862922773,0.259545433914,512
+Heat/Poisson stressed,magnitude,Magnitude $|\bar g|$,0.253285279809,0.242403649614,0.264214946976,512
