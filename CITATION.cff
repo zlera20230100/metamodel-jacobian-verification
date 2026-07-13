@@ -4,9 +4,9 @@ title: "Reproducibility supplement for: Reference-Calibrated Verification of Met
 type: software
 version: 2.0.1
 date-released: 2026-07-12
-doi: 10.5281/zenodo.21005573
+doi: 10.5281/zenodo.21331830
 repository-code: "https://github.com/zlera20230100/direction-not-magnitude"
-url: "https://doi.org/10.5281/zenodo.21005573"
+url: "https://doi.org/10.5281/zenodo.21331830"
 license: MIT
 keywords:
   - metamodel verification

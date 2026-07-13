@@ -109,7 +109,7 @@ Use the concept DOI for the latest version and all-version citation:
 
 | Release | Role | DOI |
 |---|---|---|
-| v2.0.1 | Current SIMPAT revision package | version DOI assigned after release |
+| v2.0.1 | Current SIMPAT revision package | https://doi.org/10.5281/zenodo.21331830 |
 | v2.0.0 | Previous SIMPAT revision package | https://doi.org/10.5281/zenodo.21331538 |
 | v1.0.0 | Legacy reproducibility snapshot | https://doi.org/10.5281/zenodo.21005574 |
 
