@@ -1,0 +1,40 @@
+{
+  "benchmark": "TMM stressed",
+  "objective": "minimize reflectance at archived lam_eval",
+  "lam_eval_nm": 1565.4,
+  "heldout_start_indices": [
+    26,
+    4,
+    60,
+    72,
+    41,
+    93,
+    73,
+    30
+  ],
+  "starts": 8,
+  "iterations": 20,
+  "dimensionless_step": 0.02,
+  "bounds_relative_to_nominal": [
+    -0.3,
+    0.3
+  ],
+  "matched_cost_methods": [
+    "matched_random",
+    "matched_sign_order",
+    "matched_snr_order",
+    "matched_magnitude_order"
+  ],
+  "matched_component_checks_per_update": 6,
+  "matched_verification_reference_calls_per_start": 240,
+  "matched_selection_direction": "verify the B lowest reliability scores; sign-score ties use seeded random secondary ordering",
+  "common_verification_reference_call_cap": 440,
+  "central_fd_step_nm": 0.5,
+  "snr_threshold": 2.43518759496,
+  "magnitude_threshold": 0.00396054697685,
+  "sign_calibration": "abstain; equivalent to complete central FD",
+  "assessment_objective_calls": "one at start and after each update; reported separately and not supplied to optimizers",
+  "ensemble_rebuild_max_abs_gradient_difference": 0.0,
+  "random_seed": 20260713,
+  "elapsed_seconds": 17.27263369999855
+}

@@ -73,10 +73,10 @@ METHOD_LABELS = {
     "inverse_raw_spread": r"Low raw spread $-s$",
 }
 METHOD_COLORS = {
-    "mean_aligned_sign": "#0F4D92",
+    "mean_aligned_sign": "#3775BA",
     "sign_agreement": "#6B9AC4",
-    "snr": "#2E8B57",
-    "magnitude": "#B64342",
+    "snr": "#A9C5DF",
+    "magnitude": "#DCE8F1",
     "inverse_raw_spread": "#767676",
 }
 METHOD_MARKERS = {
@@ -804,7 +804,7 @@ def plot_matched_coverage(operating_frame: pd.DataFrame, package_dir: Path) -> N
         selective,
         width,
         color="#3775BA",
-        edgecolor="#0F4D92",
+        edgecolor="#2A5B8A",
         linewidth=0.8,
         label="Correct rejected",
     )
@@ -816,7 +816,7 @@ def plot_matched_coverage(operating_frame: pd.DataFrame, package_dir: Path) -> N
             ha="center",
             va="bottom",
             fontsize=6.9,
-            color="#0F4D92",
+            color="#2A5B8A",
         )
     ax1.set_xticks(x, [spec.short for spec in DATASETS])
     ax1.set_ylabel("Reference-objective evaluations per query")

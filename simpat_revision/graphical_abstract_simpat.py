@@ -17,9 +17,9 @@ from matplotlib.patches import FancyArrowPatch, Rectangle
 HERE = Path(__file__).resolve().parent
 
 # Okabe--Ito-derived, print-safe palette.
-BLUE = "#0072B2"
+BLUE = "#3775BA"
 BLUE_LIGHT = "#DCECF4"
-ORANGE = "#D55E00"
+ORANGE = "#C76B3C"
 ORANGE_LIGHT = "#F7E6D8"
 GREY_1 = "#F2F2F2"
 GREY_2 = "#B8B8B8"
@@ -88,7 +88,7 @@ text(
     ax,
     0.035,
     0.956,
-    "Reference-calibrated selective verification of surrogate Jacobians",
+    "Reference-calibrated verification of metamodel Jacobians",
     size=16.2,
     weight="bold",
     va="top",

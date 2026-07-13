@@ -1,0 +1,25 @@
+dataset,method,method_label,multiplicity,family_size,n_splits,n_selected,selection_rate,abstention_rate,test_risk_pass_rate_conditional,test_risk_exceed_rate_conditional,test_risk_pass_rate_all_splits,coverage_q10,coverage_median,coverage_q90,risk_q10,risk_median,risk_q90,threshold_q10,threshold_median,threshold_q90
+TMM easy (near-saturated),mean_aligned_sign,Mean-aligned sign,per_score_10,10,200,200,1,0,1,0,1,0.9931818182,1,1,0.025,0.03181818182,0.03863636364,0.4,0.4,0.5
+TMM easy (near-saturated),mean_aligned_sign,Mean-aligned sign,across_scores_40,40,200,200,1,0,1,0,1,0.9931818182,1,1,0.025,0.03181818182,0.03863636364,0.4,0.4,0.5
+TMM easy (near-saturated),sign_agreement,Modal sign agreement,per_score_10,10,200,200,1,0,1,0,1,1,1,1,0.025,0.03181818182,0.03863636364,0.5,0.5,0.5
+TMM easy (near-saturated),sign_agreement,Modal sign agreement,across_scores_40,40,200,200,1,0,1,0,1,1,1,1,0.025,0.03181818182,0.03863636364,0.5,0.5,0.5
+TMM easy (near-saturated),snr,SNR |mean|/sd,per_score_10,10,200,200,1,0,1,0,1,0.9931818182,1,1,0.02288329519,0.0296803653,0.03646314955,0.02779262809,0.02779262809,0.1094552831
+TMM easy (near-saturated),snr,SNR |mean|/sd,across_scores_40,40,200,200,1,0,1,0,1,0.9931818182,1,1,0.02288329519,0.0296803653,0.03646314955,0.02779262809,0.02779262809,0.1094552831
+TMM easy (near-saturated),magnitude,Magnitude |mean|,per_score_10,10,200,200,1,0,1,0,1,0.9952272727,0.9977272727,1,0.025,0.03181818182,0.03648845827,3.846503129e-06,6.301598135e-06,1.096107567e-05
+TMM easy (near-saturated),magnitude,Magnitude |mean|,across_scores_40,40,200,200,1,0,1,0,1,0.9952272727,0.9977272727,1,0.025,0.03181818182,0.03648845827,3.846503129e-06,6.301598135e-06,1.096107567e-05
+TMM stressed,mean_aligned_sign,Mean-aligned sign,per_score_10,10,200,0,0,1,,,0,,,,,,,,,
+TMM stressed,mean_aligned_sign,Mean-aligned sign,across_scores_40,40,200,0,0,1,,,0,,,,,,,,,
+TMM stressed,sign_agreement,Modal sign agreement,per_score_10,10,200,0,0,1,,,0,,,,,,,,,
+TMM stressed,sign_agreement,Modal sign agreement,across_scores_40,40,200,0,0,1,,,0,,,,,,,,,
+TMM stressed,snr,SNR |mean|/sd,per_score_10,10,200,200,1,0,0.975,0.025,0.975,0.3378181818,0.3981818182,0.46,0.02461846808,0.04,0.07785784055,2.131619288,2.457025486,2.768795644
+TMM stressed,snr,SNR |mean|/sd,across_scores_40,40,200,200,1,0,0.985,0.015,0.985,0.2890909091,0.3763636364,0.4329090909,0.01393876394,0.03846153846,0.05316050745,2.36670499,2.492353976,3.136886546
+TMM stressed,magnitude,Magnitude |mean|,per_score_10,10,200,200,1,0,0.995,0.005,0.995,0.2505454545,0.3136363636,0.3983636364,0.00798125,0.03333333333,0.07425742574,0.00293531324,0.00368171664,0.004662254229
+TMM stressed,magnitude,Magnitude |mean|,across_scores_40,40,200,200,1,0,1,0,1,0.2161818182,0.2909090909,0.3672727273,0,0.03058132575,0.07115807615,0.003091158593,0.003776689189,0.004931517963
+Heat/Poisson stressed,mean_aligned_sign,Mean-aligned sign,per_score_10,10,200,200,1,0,1,0,1,0.90125,0.9175,0.925,0.06508501355,0.07265253584,0.07925668089,0.7,0.7,0.7
+Heat/Poisson stressed,mean_aligned_sign,Mean-aligned sign,across_scores_40,40,200,200,1,0,1,0,1,0.855125,0.915,0.925,0.04948365467,0.07265253584,0.07925668089,0.7,0.7,0.81
+Heat/Poisson stressed,sign_agreement,Modal sign agreement,per_score_10,10,200,200,1,0,1,0,1,0.87325,0.9175,0.9275,0.05676406926,0.07369819574,0.08073738487,0.7,0.7,0.8
+Heat/Poisson stressed,sign_agreement,Modal sign agreement,across_scores_40,40,200,200,1,0,1,0,1,0.79625,0.915,0.92625,0.04559748428,0.07366984993,0.08073738487,0.7,0.7,0.9
+Heat/Poisson stressed,snr,SNR |mean|/sd,per_score_10,10,200,200,1,0,1,0,1,0.877375,0.8975,0.913875,0.05788517009,0.06923055856,0.07692307692,0.4638395707,0.4915057151,0.5363703998
+Heat/Poisson stressed,snr,SNR |mean|/sd,across_scores_40,40,200,200,1,0,1,0,1,0.81,0.89375,0.9125,0.04507320544,0.06901739427,0.07692307692,0.4649477528,0.4939228463,1.057071564
+Heat/Poisson stressed,magnitude,Magnitude |mean|,per_score_10,10,200,200,1,0,1,0,1,0.878625,0.8975,0.91625,0.06145251397,0.06898762409,0.07500341064,0.00637100896,0.007136545892,0.007764967707
+Heat/Poisson stressed,magnitude,Magnitude |mean|,across_scores_40,40,200,200,1,0,1,0,1,0.809875,0.895625,0.91375,0.04231312641,0.06877579092,0.07500341064,0.006411332339,0.00715346364,0.01355655799

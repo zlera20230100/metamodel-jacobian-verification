@@ -1,0 +1,11 @@
+Training-repeat audit
+command: D:\ANACONDA\python.exe D:\实践三号“延安”\论文\SIMPAT submission\analysis\training_repeat_audit.py --repeats 10
+python: 3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:09:58) [MSC v.1929 64 bit (AMD64)]
+torch: 2.12.0+cpu
+regimes: tmm_easy,tmm_stressed,heat_poisson_stressed
+outer_repeats: 10
+members_per_repeat: 10
+tau: 0.9
+total_elapsed_seconds: 260.522332
+fixed_evidence: archived query_points and reference_gradients; hashes are in the run CSV
+excluded: antenna training and openEMS

@@ -58,21 +58,21 @@ DATASETS = (
         name="TMM easy (near-saturated)",
         short_name="TMM easy\n(near-saturated)",
         filename="extbench_tmm.npz",
-        color="#0F4D92",
+        color="#3775BA",
         marker="o",
     ),
     DatasetSpec(
         name="TMM stressed",
         short_name="TMM\nstressed",
         filename="extbench_tmm_hard.npz",
-        color="#B64342",
+        color="#C76B3C",
         marker="s",
     ),
     DatasetSpec(
         name="Heat/Poisson stressed",
         short_name="Heat/Poisson\nstressed",
         filename="extbench_poisson.npz",
-        color="#2E8B57",
+        color="#A9C5DF",
         marker="^",
     ),
 )
@@ -776,7 +776,8 @@ def plot_figure(out_dir: Path, datasets: list[dict], metrics: pd.DataFrame) -> N
     ax0.text(
         0.03,
         0.04,
-        r"Open markers: $\tau=0.9$; error bars: query-cluster 95% CI",
+        "Open markers: $\\tau=0.9$ (one per benchmark)\n"
+        "Error bars: query-cluster bootstrap 95% CI",
         transform=ax0.transAxes,
         fontsize=7.2,
         color="#4D4D4D",
@@ -820,12 +821,13 @@ def plot_figure(out_dir: Path, datasets: list[dict], metrics: pd.DataFrame) -> N
         selective,
         width,
         color="#3775BA",
-        edgecolor="#0F4D92",
+        edgecolor="#2A5B8A",
         linewidth=0.8,
+        hatch="...",
         label=r"Correct rejected ($\tau=0.9$)",
         yerr=np.vstack([selective_lo, selective_hi]),
         capsize=2.0,
-        error_kw={"elinewidth": 0.8, "ecolor": "#0F4D92"},
+        error_kw={"elinewidth": 0.8, "ecolor": "#2A5B8A"},
     )
     for bar, risk in zip(bars, residual_risk):
         ax1.text(
@@ -835,7 +837,7 @@ def plot_figure(out_dir: Path, datasets: list[dict], metrics: pd.DataFrame) -> N
             ha="center",
             va="bottom",
             fontsize=7.1,
-            color="#0F4D92",
+            color="#2A5B8A",
         )
     ax1.set_title("(b) Reference-evaluation accounting", loc="left", pad=8)
     ax1.set_ylabel("Reference-objective evaluations per query")

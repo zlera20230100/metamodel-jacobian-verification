@@ -13,7 +13,7 @@ from sklearn.metrics import roc_curve, roc_auc_score
 mpl.rcParams.update({'font.family': 'serif', 'font.serif': ['Times New Roman'], 'mathtext.fontset': 'stix',
     'pdf.fonttype': 42, 'ps.fonttype': 42, 'axes.spines.top': False, 'axes.spines.right': False,
     'axes.labelsize': 10.5, 'xtick.labelsize': 9.5, 'ytick.labelsize': 9.5, 'legend.fontsize': 8.5, 'axes.linewidth': 0.9})
-DIR = os.path.dirname(os.path.abspath(__file__)); GRN = '#1e7a45'; ACC = '#c0392b'; SIG = '#1f5fa6'; NEU = '#444444'
+DIR = os.path.dirname(os.path.abspath(__file__)); GRN = '#3775BA'; ACC = '#C76B3C'; SIG = '#3775BA'; NEU = '#4D4D4D'
 REF = '#404040'; REF_DASH = (0, (5, 4)); REF_LW = 1.4  # unified reference/guide-line style (chance + threshold)
 d = np.load(os.path.join(DIR, 'extbench_tmm.npz'))
 

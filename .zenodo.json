@@ -1,9 +1,9 @@
 {
-  "title": "Reproducibility supplement for: Reference-Calibrated Selective Verification of Surrogate Design Jacobians under Finite Simulation Budgets",
+  "title": "Reproducibility supplement for: Reference-Calibrated Verification of Metamodel Design Jacobians under Finite Simulation Budgets",
   "upload_type": "software",
   "version": "v2.0.0",
   "publication_date": "2026-07-12",
-  "description": "Authoritative SIMPAT revision package in simpat_revision/: frozen external-member gradients, reference-gradient step and independent-derivative verification for 3,580 components, score comparisons, query-cluster bootstrap risk-coverage analysis, finite reference-budget correction, openEMS step-ladder provenance, and deterministic figure sources. The antenna derivatives remain numerically unresolved and are excluded from quantitative reliability claims. The project-specific device PINN training framework is not bundled.",
+  "description": "Authoritative SIMPAT revision package in simpat_revision/: frozen external-member gradients, numerical verification for 3,580 reference-gradient components, repeated calibration and training audits, tie and ensemble-size sensitivity, finite reference-budget accounting, matched-cost multistep optimization, openEMS step-ladder provenance, and deterministic figure sources. The matched-cost audit is reported as a boundary result: no deployable score ordering dominates random allocation across all tested outcomes. Antenna derivatives remain numerically unresolved and are excluded from quantitative reliability claims. The project-specific device PINN training framework is not bundled.",
   "license": "MIT",
   "access_right": "open",
   "language": "eng",

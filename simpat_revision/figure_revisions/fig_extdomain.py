@@ -28,8 +28,8 @@ mpl.rcParams.update({
 })
 
 DIR = os.path.dirname(os.path.abspath(__file__))
-GRN = '#1e7a45'
-SIG = '#1f5fa6'
+GRN = '#A9C5DF'
+SIG = '#3775BA'
 REF = '#404040'
 REF_DASH = (0, (5, 4))
 
@@ -101,7 +101,7 @@ a.set_xticks([0, 0.5, 1])
 a.set_yticks([0, 0.5, 1])
 a.legend(loc='lower right', frameon=False, fontsize=8.2)
 a.set_title(
-    '(a) the ranking generalises to diffusion, weaker than resonance',
+    '(a) above-chance ranking in diffusion, weaker than resonance',
     loc='left', fontsize=9.0, fontweight='bold'
 )
 
@@ -112,7 +112,9 @@ los = [lo_p, lo_t]
 his = [hi_p, hi_t]
 cols = [GRN, SIG]
 xb = np.arange(2)
-b.bar(xb, aucs, color=cols, edgecolor='k', lw=0.6, width=0.58, zorder=3)
+bars = b.bar(xb, aucs, color=cols, edgecolor='k', lw=0.6, width=0.58, zorder=3)
+for patch, hatch in zip(bars, ('///', '...')):
+    patch.set_hatch(hatch)
 b.errorbar(
     xb, aucs,
     yerr=[np.array(aucs) - np.array(los), np.array(his) - np.array(aucs)],
@@ -142,7 +144,7 @@ b.set_title(
 fig.text(
     0.74, -0.02,
     f'diffusion class balance: {nw} sign-wrong / {nc} correct;  '
-    f'both CIs exclude chance.\nThe ranking generalises in direction, not strength; '
+    f'both CIs exclude chance.\nThe ranking remains informative, with physics-dependent strength; '
     f'the verification payoff is physics-dependent.',
     fontsize=7.6, va='top', ha='center', color='0.3'
 )

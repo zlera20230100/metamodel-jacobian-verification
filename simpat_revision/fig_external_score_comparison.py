@@ -35,7 +35,7 @@ datasets = [
 dataset_labels = ["TMM near", "TMM stressed", "Heat/Poisson"]
 methods = ["mean_aligned_sign", "snr", "magnitude"]
 method_labels = ["mean-aligned sign", "SNR", "magnitude"]
-colors = ["#0F4D92", "#8BCF8B", "#E9A6A1"]
+colors = ["#3775BA", "#6B9AC4", "#DCE8F1"]
 hatches = ["///", "...", "\\\\"]
 
 auc = pd.read_csv(AUC_CSV).set_index(["dataset", "method"])
@@ -55,13 +55,12 @@ for j, (method, label, color, hatch) in enumerate(zip(methods, method_labels, co
            linewidth=0.7, hatch=hatch, label=label, zorder=3)
     ax.errorbar(pos, vals, yerr=np.vstack([vals - lo, hi - vals]), fmt="none", color="black",
                 elinewidth=0.9, capsize=2.5, zorder=4)
-    for px, value in zip(pos, vals):
-        ax.text(px, value + 0.018, f"{value:.3f}", ha="center", va="bottom", fontsize=7.5,
-                rotation=90)
+    for px, value, upper in zip(pos, vals, hi):
+        ax.text(px, upper + 0.010, f"{value:.3f}", ha="center", va="bottom", fontsize=6.8)
 ax.axhline(0.5, color="#555555", lw=1.0, ls=(0, (4, 3)), zorder=1)
 ax.text(0.01, 0.505, "chance", transform=ax.get_yaxis_transform(), ha="left", va="bottom",
         fontsize=7.7, color="#555555")
-ax.set_ylim(0.5, 1.03)
+ax.set_ylim(0.5, 1.045)
 ax.set_ylabel("sign-correctness AUC (cluster 95% CI)")
 ax.set_xticks(x, dataset_labels)
 ax.set_title("(a) Classification ranking favors SNR or magnitude", loc="left", fontweight="bold")
@@ -76,9 +75,8 @@ for j, (method, label, color, hatch) in enumerate(zip(methods, method_labels, co
            hatch=hatch, zorder=3)
     ax.errorbar(pos, vals, yerr=np.vstack([vals - lo, hi - vals]), fmt="none", color="black",
                 elinewidth=0.9, capsize=2.5, zorder=4)
-    for px, value in zip(pos, vals):
-        ax.text(px, value + 0.022, f"{value:.3f}", ha="center", va="bottom", fontsize=7.5,
-                rotation=90)
+    for px, value, upper in zip(pos, vals, hi):
+        ax.text(px, upper + 0.012, f"{value:.3f}", ha="center", va="bottom", fontsize=6.8)
 ax.set_ylim(0.0, 0.90)
 ax.set_ylabel("normalized error-frontier area\n(lower is better; cluster 95% CI)")
 ax.set_xticks(x, dataset_labels)

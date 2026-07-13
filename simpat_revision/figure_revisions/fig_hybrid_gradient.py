@@ -9,7 +9,7 @@ from matplotlib.transforms import offset_copy
 mpl.rcParams.update({'font.family': 'serif', 'font.serif': ['Times New Roman'], 'mathtext.fontset': 'stix',
     'pdf.fonttype': 42, 'ps.fonttype': 42, 'axes.spines.top': False, 'axes.spines.right': False,
     'axes.labelsize': 10.5, 'xtick.labelsize': 9.5, 'ytick.labelsize': 9.5, 'legend.fontsize': 8.5, 'axes.linewidth': 0.9})
-DIR = os.path.dirname(os.path.abspath(__file__)); GRN = '#1e7a45'; ACC = '#c0392b'; SIG = '#1f5fa6'; ORG = '#e67e22'; NEU = '#404040'
+DIR = os.path.dirname(os.path.abspath(__file__)); GRN = '#A9C5DF'; ACC = '#C76B3C'; SIG = '#3775BA'; ORG = '#C76B3C'; NEU = '#4D4D4D'
 d = np.load(os.path.join(DIR, 'hybrid_gradient.npz'))
 K = int(d['K']); tau = float(d['tau'])
 

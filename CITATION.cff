@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or data, cite the archived release below."
-title: "Reproducibility supplement for: Reference-Calibrated Selective Verification of Surrogate Design Jacobians under Finite Simulation Budgets"
+title: "Reproducibility supplement for: Reference-Calibrated Verification of Metamodel Design Jacobians under Finite Simulation Budgets"
 type: software
 version: 2.0.0
 date-released: 2026-07-12

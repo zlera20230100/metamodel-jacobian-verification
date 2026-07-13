@@ -1,0 +1,16 @@
+dataset,primary_score,tie_rule,random_repetitions,frontier_area,frontier_area_q025,frontier_area_median,frontier_area_q975,frontier_area_sd_across_reorderings
+TMM easy (near-saturated),mean_aligned_sign,random,1000,0.2116537913,0.2036772883,0.2119363825,0.2185417329,0.003808192899
+TMM easy (near-saturated),mean_aligned_sign,low_snr_first,0,0.2290954251,,,,
+TMM easy (near-saturated),mean_aligned_sign,high_snr_first,0,0.1796689192,,,,
+TMM easy (near-saturated),mean_aligned_sign,low_magnitude_first,0,0.269940616,,,,
+TMM easy (near-saturated),mean_aligned_sign,fixed_index,0,0.1985866482,,,,
+TMM stressed,mean_aligned_sign,random,1000,0.6669065746,0.6549116736,0.6666742259,0.6787387173,0.006134641781
+TMM stressed,mean_aligned_sign,low_snr_first,0,0.713647328,,,,
+TMM stressed,mean_aligned_sign,high_snr_first,0,0.6148320702,,,,
+TMM stressed,mean_aligned_sign,low_magnitude_first,0,0.7363404516,,,,
+TMM stressed,mean_aligned_sign,fixed_index,0,0.6647682797,,,,
+Heat/Poisson stressed,mean_aligned_sign,random,1000,0.2441585151,0.2409116329,0.244210213,0.2472427807,0.001656529444
+Heat/Poisson stressed,mean_aligned_sign,low_snr_first,0,0.2486972223,,,,
+Heat/Poisson stressed,mean_aligned_sign,high_snr_first,0,0.2365646971,,,,
+Heat/Poisson stressed,mean_aligned_sign,low_magnitude_first,0,0.2532547558,,,,
+Heat/Poisson stressed,mean_aligned_sign,fixed_index,0,0.2264884094,,,,

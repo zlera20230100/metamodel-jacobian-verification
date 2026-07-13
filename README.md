@@ -1,4 +1,4 @@
-# Reference-Calibrated Selective Verification of Surrogate Design Jacobians under Finite Simulation Budgets
+# Reference-Calibrated Verification of Metamodel Design Jacobians under Finite Simulation Budgets
 
 Reproducibility code and data for the revised manuscript prepared for submission to
 *Simulation Modelling Practice and Theory*.
@@ -14,8 +14,9 @@ Kai You, and Long Zhang (corresponding author: 20230100@huat.edu.cn)
 The authoritative **v2.0.0 SIMPAT revision package** is in
 [`simpat_revision/`](simpat_revision/). It contains the frozen arrays,
 reference-gradient verification, risk--coverage and finite-budget analyses,
-openEMS step-ladder records, deterministic figure sources, and an internal
-evidence manifest used by the revised manuscript.
+repeated calibration and training audits, matched-cost multistep optimization,
+openEMS step-ladder records, deterministic figure sources, and an evidence
+manifest used by the revised manuscript.
 
 Files at the repository root reproduce the original v1.0.0 release and remain
 available for provenance. They should not be used to reconstruct the revised
@@ -39,6 +40,13 @@ SIMPAT claims. The immutable v1 tree is also available at tag
   risk is 95.9%/1.5%, 74.0%/13.4%, and 79.9%/4.9%. Correcting rejected
   components costs 0.90/22, 5.72/22, and 6.44/32 reference evaluations per
   query relative to complete central finite differences.
+- Repeated-split calibration, independent training repeats, random tie
+  resolution, ensemble-size sensitivity, and amortized reference-cost analyses
+  expose how the operating point changes under finite data and finite budgets.
+- In the matched-cost 20-step TMM audit, random, sign, SNR, and magnitude
+  allocation each use exactly 240 reference calls per start. No deployable
+  score ordering dominates random allocation across all tested trajectory
+  outcomes; this boundary result is retained rather than hidden.
 - The antenna step ladder is a failure-aware boundary: all six openEMS
   aperture derivatives reverse sign at the largest tested step. These
   derivatives are unresolved and excluded from AUC, calibration, risk,
@@ -60,6 +68,14 @@ python reference_gradient_verification.py --data-dir . --out-dir .
 
 # Worked risk--coverage and central-FD cost accounting
 python risk_coverage_simpat.py --data-dir . --out-dir .
+
+# Stability and matched-cost trajectory audits
+python repeated_split_calibration.py
+python tie_sensitivity.py
+python subensemble_sensitivity.py
+python training_repeat_audit.py
+python break_even_reference_cost.py
+python multistep_tmm_budget_optimization.py
 
 # Deterministic publication figure
 python graphical_abstract_simpat.py
@@ -93,7 +109,7 @@ Use the concept DOI for the latest version and all-version citation:
 
 | Release | Role | DOI |
 |---|---|---|
-| v2.0.0 | Current SIMPAT revision package | version DOI assigned by Zenodo after release |
+| v2.0.0 | Current SIMPAT revision package | see the current version under the concept DOI |
 | v1.0.0 | Legacy reproducibility snapshot | https://doi.org/10.5281/zenodo.21005574 |
 
 Release-specific metadata are recorded in [`CITATION.cff`](CITATION.cff) and

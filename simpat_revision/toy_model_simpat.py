@@ -206,10 +206,10 @@ def main() -> None:
         }
     )
 
-    blue = "#0077BB"
-    orange = "#EE7733"
-    red = "#CC3311"
-    grey = "#666666"
+    blue = "#3775BA"
+    orange = "#C76B3C"
+    red = "#C76B3C"
+    grey = "#4D4D4D"
 
     fig, axes = plt.subplots(1, 2, figsize=(7.25, 3.15))
 

@@ -1,75 +1,149 @@
 # -*- coding: utf-8 -*-
-# fig_allocator (single panel) -- the cost-accuracy FRONTIER of the rank-and-allocate solver-budget
-# allocator on the controlled spectrum (20000 trials). Relative gradient error vs the number of
-# full-wave (FD) solves B = 0..K. Curves: rank-and-allocate (new, by sign-agreement), the fixed-tau
-# threshold gate (its operating points -- a VARIABLE-budget special case of the allocator), random
-# ordering, and the oracle lower bound. Rank-allocate dominates random (~43% smaller area) and
-# closes ~70% of the gap to the oracle; the new value is controllability + the explicit frontier.
+"""Fixed- and variable-budget gradient-correction frontiers."""
+
 import os
-os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
-import numpy as np
-import matplotlib as mpl; mpl.use('Agg')
+
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
+import matplotlib as mpl
+
+mpl.use("Agg")
 import matplotlib.pyplot as plt
-mpl.rcParams.update({'font.family': 'serif', 'font.serif': ['Times New Roman'], 'mathtext.fontset': 'stix',
-    'pdf.fonttype': 42, 'ps.fonttype': 42, 'axes.spines.top': False, 'axes.spines.right': False,
-    'axes.labelsize': 10.5, 'xtick.labelsize': 9.5, 'ytick.labelsize': 9.5, 'legend.fontsize': 8.5, 'axes.linewidth': 0.9})
-DIR = os.path.dirname(os.path.abspath(__file__)); GRN = '#1e7a45'; ACC = '#c0392b'; SIG = '#1f5fa6'; ORG = '#e67e22'
-d = np.load(os.path.join(DIR, 'rank_allocator.npz'))
-Bs = d['Bs']; K = int(d['K'])
-err_rank = d['err_rank_sa']; err_rand = d['err_random']; err_orac = d['err_oracle']
-# threshold-gate operating points (sweep tau): mean cost vs mean error
-gcost = d['gate_cost_curve']; gerr = d['gate_err_curve']
-op_c = float(d['op_cost_tau']); op_e = float(d['op_err_tau']); op_cstd = float(d['op_cost_std']); tau = float(d['tau'])
-# areas under the frontier (lower better)
-A_rank = float(d['auc_rank_sa']); A_rand = float(d['auc_random']); A_orac = float(d['auc_oracle'])
-area_vs_random = (1.0 - A_rank / A_rand) * 100.0
-gap_closed = float(d['mean_closeness']) * 100.0
+import numpy as np
 
-fig, ax = plt.subplots(figsize=(6.6, 4.6))
 
-# shade the achievable region between oracle (best) and random (worst) for visual reference
-ax.fill_between(Bs, err_orac, err_rand, color='0.85', alpha=0.45, zorder=0)
+mpl.rcParams.update(
+    {
+        "font.family": "serif",
+        "font.serif": ["Times New Roman"],
+        "mathtext.fontset": "stix",
+        "pdf.fonttype": 42,
+        "ps.fonttype": 42,
+        "axes.spines.top": False,
+        "axes.spines.right": False,
+        "axes.labelsize": 10.5,
+        "xtick.labelsize": 9.5,
+        "ytick.labelsize": 9.5,
+        "legend.fontsize": 8.3,
+        "axes.linewidth": 0.9,
+    }
+)
 
-ax.plot(Bs, err_rand, '-s', color=ACC, ms=5, lw=1.6, zorder=3, label='random ordering')
-# threshold gate: dedupe the staircase (tau-sweep repeats x), show as discrete operating points
-keep = np.concatenate([[True], np.abs(np.diff(gcost)) > 1e-9])
-ax.plot(gcost[keep], gerr[keep], ':D', color=SIG, ms=5.5, lw=1.4, zorder=4,
-        label='fixed-$\\tau$ threshold gate (variable budget)')
-ax.plot(Bs, err_rank, '-o', color=GRN, ms=6, lw=2.2, zorder=5, label='rank-and-allocate (proposed)')
-ax.plot(Bs, err_orac, '--*', color='0.30', ms=9, lw=1.4, zorder=4, label='oracle (lower bound)')
+HERE = os.path.dirname(os.path.abspath(__file__))
+BLUE = "#3775BA"
+ORANGE = "#C76B3C"
+GREEN = "#6B9AC4"
+GREY = "#555555"
 
-# Mark the gate's realized operating point and its HORIZONTAL (budget-direction) spread. This is the
-# ONLY point with a bar because every other series is plotted at a FIXED, user-chosen budget B (no
-# x-spread), whereas the tau-gate's realized budget is a random, data-dependent quantity -- the
-# uncontrolled budget the allocator replaces with an exact B. The bar is in x (solves), not y (error).
-ax.errorbar([op_c], [op_e], xerr=[[op_cstd], [op_cstd]], fmt='D', color=SIG, mfc=SIG, mec='white',
-            mew=0.8, ms=6.5, ecolor=SIG, elinewidth=1.4, capsize=4, zorder=7, alpha=0.95)
-ax.annotate(f'gate @ $\\tau={tau}$: realized\n'
-            f'budget uncontrolled (bar $=$\n'
-            f'$\\pm$std of solves spent, $B$):\n'
-            f'mean {op_c:.2f} $\\pm$ {op_cstd:.2f} solves',
-            xy=(op_c, op_e), xytext=(0.05, 0.075), fontsize=7.3, color=SIG, ha='left', va='top',
-            arrowprops=dict(arrowstyle='->', color=SIG, lw=1.1,
-                            connectionstyle='arc3,rad=-0.18'))
+d = np.load(os.path.join(HERE, "rank_allocator.npz"))
+budgets = d["Bs"]
+k = int(d["K"])
+err_rank = d["err_rank_sa"]
+err_random = d["err_random"]
+err_oracle = d["err_oracle"]
+gate_cost = d["gate_cost_curve"]
+gate_error = d["gate_err_curve"]
+op_cost = float(d["op_cost_tau"])
+op_error = float(d["op_err_tau"])
+op_cost_sd = float(d["op_cost_std"])
+tau = float(d["tau"])
 
-ax.set_xlabel('full-wave (FD) solves spent,  $B$  (of %d components)' % K)
-ax.set_ylabel('relative gradient error  $\\|g-a\\|/\\|a\\|$')
-ax.set_xlim(-0.15, K + 0.15); ax.set_ylim(-0.02, 0.55)
-ax.set_xticks(range(0, K + 1))
-ax.legend(loc='upper right', frameon=False, fontsize=8.2)
-ax.text(0.975, 0.77,
-        f'rank-allocate: {area_vs_random:.0f}% smaller frontier area than random;\n'
-        f'closes $\\sim${gap_closed:.0f}% of the gap to the oracle.\n'
-        f'the threshold gate is its variable-budget special case\n'
-        f'(equal at matched budget) $\\Rightarrow$ added value = controllability.',
-        transform=ax.transAxes, fontsize=7.5, va='top', ha='right', color='0.2',
-        bbox=dict(boxstyle='round,pad=0.4', fc='#eef6f0', ec=GRN, lw=0.7))
-ax.set_title('Rank-and-allocate exposes a controllable cost-accuracy frontier',
-             loc='left', fontsize=9.6, fontweight='bold')
+area_rank = float(d["auc_rank_sa"])
+area_random = float(d["auc_random"])
+area_oracle = float(d["auc_oracle"])
 
-fig.tight_layout()
-for ext in ('pdf', 'png'):
-    fig.savefig(os.path.join(DIR, f'fig_allocator.{ext}'), dpi=320, bbox_inches='tight')
-print(f'wrote fig_allocator.pdf/.png ; area vs random -{area_vs_random:.1f}% '
-      f'(rank {A_rank:.3f} / rand {A_rand:.3f} / oracle {A_orac:.3f}), gap closed ~{gap_closed:.0f}%, '
-      f'gate cost {op_c:.2f}+-{op_cstd:.2f}')
+fig, ax = plt.subplots(figsize=(6.6, 4.35))
+
+# The shaded interval is the observed random-to-reference-informed gap.
+ax.fill_between(budgets, err_oracle, err_random, color="#E5E5E5", alpha=0.65, zorder=0)
+ax.plot(
+    budgets,
+    err_random,
+    "-s",
+    color=ORANGE,
+    ms=5.0,
+    lw=1.6,
+    label="random ordering",
+    zorder=3,
+)
+
+# Repeated costs occur in the threshold sweep; show one point per realised cost.
+keep = np.concatenate([[True], np.abs(np.diff(gate_cost)) > 1e-9])
+ax.plot(
+    gate_cost[keep],
+    gate_error[keep],
+    ":D",
+    color=GREEN,
+    ms=5.2,
+    lw=1.35,
+    label="fixed-$\\tau$ rule (variable budget)",
+    zorder=4,
+)
+ax.plot(
+    budgets,
+    err_rank,
+    "-o",
+    color=BLUE,
+    ms=5.7,
+    lw=2.0,
+    label="rank-and-allocate (fixed budget)",
+    zorder=5,
+)
+ax.plot(
+    budgets,
+    err_oracle,
+    "--*",
+    color=GREY,
+    ms=8.5,
+    lw=1.35,
+    label="reference-informed lower bound",
+    zorder=4,
+)
+
+# Only the threshold rule has a variable realised budget; the other curves use fixed B.
+ax.errorbar(
+    [op_cost],
+    [op_error],
+    xerr=[[op_cost_sd], [op_cost_sd]],
+    fmt="D",
+    color=GREEN,
+    mfc="white",
+    mec=GREEN,
+    mew=1.2,
+    ms=6.0,
+    ecolor=GREEN,
+    elinewidth=1.2,
+    capsize=3.5,
+    zorder=7,
+)
+# Explain the hollow operating-point marker in an unused corner.  A leader line
+# or an adjacent label would cross the surrounding frontiers at this location.
+ax.text(
+    0.02,
+    0.055,
+    f"hollow diamond: $\\tau={tau}$ operating point\n"
+    f"horizontal bar: {op_cost:.1f} $\\pm$ {op_cost_sd:.1f} realised checks",
+    transform=ax.transAxes,
+    color=GREEN,
+    fontsize=7.8,
+    ha="left",
+    va="bottom",
+    zorder=8,
+)
+
+ax.set_xlabel("central-FD component checks $B$  (2 reference evaluations each)")
+ax.set_ylabel("relative gradient error  $\\|g-a\\|/\\|a\\|$")
+ax.set_xlim(-0.15, k + 0.15)
+ax.set_ylim(-0.02, 0.55)
+ax.set_xticks(range(k + 1))
+ax.legend(loc="upper right", frameon=False)
+
+fig.tight_layout(pad=0.7)
+for ext in ("pdf", "png"):
+    fig.savefig(os.path.join(HERE, f"fig_allocator.{ext}"), dpi=400, bbox_inches="tight")
+
+print(
+    "wrote fig_allocator.pdf/.png; "
+    f"areas rank/random/oracle={area_rank:.3f}/{area_random:.3f}/{area_oracle:.3f}; "
+    f"gate cost={op_cost:.2f}+-{op_cost_sd:.2f}"
+)
