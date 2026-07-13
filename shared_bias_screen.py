@@ -1,45 +1,44 @@
 # -*- coding: utf-8 -*-
 # ============================================================================
-# Correlated-seed-aware ("self-aware") reliability gate.
+# Shared-bias diagnostic for the component verification gate.
 #
 # The reliability-gated hybrid gradient certifies a component k
 # (uses the cheap autodiff ensemble mean instead of a solver call) when the
-# across-seed SIGN-AGREEMENT sa_k = max(frac(+), frac(-)) >= tau. This silently
-# fails under a SHARED (seed-correlated) bias: a common bias term that is
+# across-seed sign agreement sa_k = max(frac(+), frac(-)) >= tau. This
+# fails under a shared seed-correlated bias: a common bias term that is
 # identical across all M independently-retrained seeds inflates sign-agreement
-# even when the agreed sign is WRONG -> the gate certifies a sign-flipped
-# component (a "false trust"). This is the Devil's-Advocate exploit that lives
-# near rho ~ 0.5-0.7 (rho = fraction of the noise variance that is seed-shared;
-# see shared_bias_sweep.py / hybrid_robust.py: the gate trusts MORE while being
-# MORE wrong as rho grows).
+# even when the agreed sign is wrong. The gate can then certify a sign-flipped
+# component. This failure appears near rho ~ 0.5-0.7, where rho is the fraction
+# of noise variance shared across seeds; see shared_bias_sweep.py and
+# hybrid_robust.py.
 #
-# THE NEW ALGORITHM. From the M-by-K seed gradients J alone, estimate the
+# From the M-by-K seed gradients J, estimate the
 # shared-variance fraction rho-hat by a one-way random-effects / intraclass-
 # correlation (ICC) decomposition that treats the K components as targets and
-# the M seeds as raters. The SELF-AWARE gate keeps the sign-agreement test BUT
-# additionally checks rho-hat: if rho-hat exceeds a calibrated threshold the
+# the M seeds as raters. The shared-bias screen keeps the sign-agreement test and
+# also checks rho-hat. If rho-hat exceeds a calibrated threshold, the
 # ensemble is flagged as correlated / untrustworthy and the gate ABSTAINS from
-# certifying (defers to the solver) rather than falsely trusting. The gate thus
-# knows when its own independence assumption is violated.
+# certifying and defers to the solver.
 #
-# Estimator honesty. rho-hat conflates two seed-shared structures: (i) the TRUE
+# Estimator scope. rho-hat conflates two seed-shared structures: (i) the true
 # signal a_true (identical across seeds) and (ii) the shared BIAS we want to
 # detect. Hence raw rho-hat carries a positive offset even at rho=0. We report
-# raw rho-hat AND an offset-corrected version, and -- crucially -- the gate is a
-# GLOBAL regime detector (it abstains on the whole correlated ensemble), because
+# raw rho-hat and an offset-corrected version. The gate is a global regime
+# detector that abstains on the whole correlated ensemble because
 # a single trial-level scalar cannot point at WHICH component is the flipped one
 # (verified: within a fixed rho, rho-hat has ~chance AUC for the per-component
-# wrong/right label). Detecting the regime is enough to restore safety.
+# wrong/right label). Detection identifies the regime but does not localize the
+# affected component.
 #
 # Reuses the exact shared-bias data model of shared_bias_sweep.py / hybrid_robust.py:
 #   J[m,k] = a_true[k] + common[k] + idio[m,k],
 #   common[k] ~ N(0, rho*sig_k^2)  (shared by every seed),
 #   idio[m,k] ~ N(0, (1-rho)*sig_k^2),  sig_k log-uniform in [0.05, 8].
 # Total per-component noise variance is sig_k^2 for every rho (std-matched), so
-# only the SHARING changes, never the marginal difficulty -- a clean ablation.
+# Only the sharing changes; the marginal difficulty stays fixed.
 #
-# Outputs: selfaware_gate.npz (+ console summary). No manuscript / git side effects.
-# Run: D:\ANACONDA\python.exe selfaware_gate.py   (CPU; OMP_NUM_THREADS=6)
+# Output: shared_bias_screen.npz and a console summary.
+# Run: python shared_bias_screen.py (CPU; OMP_NUM_THREADS=6)
 # ============================================================================
 import os
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
@@ -99,7 +98,7 @@ def rel_err(g):
 
 
 # ---------------------------------------------------------------------------
-# STEP 0 -- calibrate BOTH self-aware thresholds on a CLEAN (rho=0) reference.
+# Step 0: calibrate both thresholds on the rho=0 reference.
 # We only ever see J, so thresholds must be set from an i.i.d. reference cohort.
 #
 #  (a) GLOBAL regime trigger:  rho_gate = CAL_PCTL-th percentile of rho-hat at
@@ -143,11 +142,11 @@ print("=" * 78)
 # ===========================================================================
 # MAIN SWEEP over rho.  THREE gates are evaluated on identical trials:
 #   PLAIN   : certify k iff sa_k >= TAU.
-#   GLOBAL  : self-aware via the global regime trigger -- if rho-hat >= RHO_GATE
+#   GLOBAL  : global regime trigger; if rho-hat >= RHO_GATE
 #             the ensemble is declared correlated and the gate certifies NOTHING
 #             (defers all K to the solver); else == PLAIN. This is the literal
 #             "abstain when rho-hat is high" design.
-#   PERCOMP : self-aware via the per-component spread ceiling -- certify k iff
+#   PERCOMP : per-component spread ceiling; certify k iff
 #             sa_k >= TAU AND sd_k <= S_GATE; i.e. drop certified components whose
 #             observed across-seed spread (a proxy for the noise scale on which a
 #             shared-bias flip rides) is anomalously large.
@@ -271,7 +270,7 @@ for r in (0.0, 0.5, 0.6, 0.7, 0.8):
     print("    rho=%.1f : FT %.4f | %.4f | %.4f   cost %.2f | %.2f | %.2f   err %.3f | %.3f | %.3f"
           % (r, row[3], row[4], row[5], row[9], row[10], row[11], row[12], row[13], row[14]))
 
-# safety-restoration summary at the worst rho -- compare BOTH self-aware variants to plain
+# Risk summary at the largest rho, comparing both variants with the plain gate.
 worst = rows[-1]
 red_glob = (worst[3] - worst[4]) / max(1e-12, worst[3]) * 100
 red_perc = (worst[3] - worst[5]) / max(1e-12, worst[3]) * 100
@@ -289,7 +288,7 @@ print("    grad rel-error     plain=%.3f | global=%.3f | per-comp=%.3f | all-AD=
 # strict (rho_gate=0.874) because rho-hat at rho=0 already averages ~0.36 from
 # pure signal structure; it therefore only fires on extreme correlation and
 # leaves the unflagged trials exposed. To show the FULL safety<->cost trade-off
-# honestly we re-evaluate the self-aware gate over a grid of abstention
+# Re-evaluate the shared-bias screen over a grid of abstention
 # thresholds, each calibrated as a percentile of the rho=0 reference cohort
 # (so each has a known clean-case false-alarm rate). We report, per rho,
 # false-trust rate and solver cost at every operating point.
@@ -338,7 +337,7 @@ for ri, rho in enumerate(RHOS):
     print(line)
 print("    (stricter ceiling [lower percentile] = lower false-trust, higher solver cost.)")
 
-np.savez('selfaware_gate.npz',
+np.savez('shared_bias_screen.npz',
          rho=true_rho,
          rhohat_mean=rhohat_mean,
          rhohat_sd=np.array(rhohat_sd_by_rho),
@@ -356,4 +355,4 @@ np.savez('selfaware_gate.npz',
          grid_ft=grid_ft, grid_cost=grid_cost, grid_flag=grid_flag,
          tau=TAU, K=K, M=M, n_trials=N_TRIALS,
          rhohat0_sample=rhohat0[:2000])
-print("\nsaved selfaware_gate.npz")
+print("\nsaved shared_bias_screen.npz")

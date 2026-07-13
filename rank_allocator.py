@@ -5,7 +5,7 @@
 # sign-agreement >= tau), which gives a VARIABLE, uncontrolled number of full-wave finite-difference
 # (FD) solves and no notion of "best gradient for B solves".
 #
-# NEW ALGORITHM -- rank-and-allocate:
+# Rank-and-allocate procedure:
 #   Given a fixed budget B in {0..K} FD solves, RANK the K components by a cheap gate-reliability
 #   score (ensemble sign-agreement, or SNR), then spend the B available solves on the B LEAST-reliable
 #   components (greedy: correct the most-likely-wrong first) and take free autodiff on the rest.
@@ -174,7 +174,7 @@ print(f"\nPaper threshold gate @tau={TAU}: mean cost {op_cost_tau:.3f} solves, m
 def interp_err(curve, B_query):
     return np.interp(B_query, Bs, curve)
 
-# (1) Matched-cost comparison done two ways (HONEST):
+# (1) Matched-cost comparison under two definitions:
 #  (1a) RIGOROUS matched-budget: per trial, rank-allocate spending the gate's OWN realized budget.
 #       This is the fair like-for-like test. It equals the gate exactly (rank-allocate subsumes the
 #       gate as the special case "budget = #comps below tau").
@@ -232,7 +232,7 @@ print(f"  rank vs random : {100*(1-auc_rank_sa/auc_random):.1f}% smaller area  (
 print(f"  rank vs oracle : rank area is {auc_rank_sa/auc_oracle:.2f}x the oracle area "
       f"(1.00 = matches oracle)")
 
-print("\n--- HONEST relationship to the threshold gate (the reviewer's point) ---")
+print("\n--- Relationship to the threshold gate ---")
 print(f"The fixed-tau gate at tau={TAU} spends an UNCONTROLLED budget: mean {op_cost_tau:.3f} solves "
       f"but std {op_cost_std:.3f}, range 0..{K}.")
 print(f"  realized-budget distribution (B=0..{K}): "

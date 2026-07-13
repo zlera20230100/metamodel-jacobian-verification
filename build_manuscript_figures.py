@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# regenerates the figures used in the paper. output filenames match the .tex.
+# Regenerate the paper figures. Output filenames match the LaTeX source.
 import os
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 import numpy as np
@@ -11,7 +11,7 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Rectangle
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
-# shared style settings and helpers
+# Shared style settings and helpers.
 NEU = '#4D4D4D'   # neutral/reference
 SIG = '#3775BA'   # Nature-family primary blue
 ACC = '#C76B3C'   # single muted warm accent
@@ -46,7 +46,7 @@ def save(fig, name):
 
 apply_style()
 
-# fig_method: device stack (a) + PINN I/O schematic (b). no data file, drawn from scratch.
+# fig_method: device stack (a) and PINN input/output schematic (b).
 def make_method():
     fig, (a, b) = plt.subplots(1, 2, figsize=(10.4, 4.2),
                                gridspec_kw={'width_ratios': [1.0, 1.08]})
@@ -105,7 +105,7 @@ def make_method():
         b.text(0.975, y, s, ha='center', va='center', fontsize=11)
     b.text(0.975, 8.55, 'inputs', ha='center', fontsize=8.2, color='#777')
     # collect inputs onto a vertical bus, then a single arrow into the PINN.
-    # ONE unified flow style: stubs, bus, lead-in and every directional arrow
+    # Use one flow style for stubs, the bus, lead-ins, and directional arrows.
     # share the same dark colour, linewidth and arrowhead size, so the whole
     # path reads as a single clean structural flow (no grey-vs-black mismatch).
     FLOW = '#404040'           # one structural-connector colour (matches guides)

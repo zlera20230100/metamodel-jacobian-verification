@@ -33,10 +33,10 @@ mpl.rcParams.update(
 HERE = os.path.dirname(os.path.abspath(__file__))
 BLUE = "#3775BA"
 ORANGE = "#C76B3C"
-GOLD = "#9AA3AA"
+MID_GREY = "#9AA3AA"
 GREY = "#555555"
 
-d = np.load(os.path.join(HERE, "selfaware_gate.npz"))
+d = np.load(os.path.join(HERE, "shared_bias_screen.npz"))
 rho = d["rho"]
 ft_plain = d["ft_plain"]
 ft_global = d["ft_global"]
@@ -67,7 +67,7 @@ ax_risk.plot(
     rho,
     ft_global,
     "-^",
-    color=GOLD,
+    color=MID_GREY,
     ms=5.4,
     lw=1.6,
     label="global-abstain variant",
@@ -83,7 +83,7 @@ ax_risk.plot(
 )
 
 for values, colour in (
-    (ft_global, GOLD),
+    (ft_global, MID_GREY),
     (ft_plain, ORANGE),
     (ft_percomp, BLUE),
 ):
@@ -172,10 +172,10 @@ ax_icc.text(
 )
 
 for ext in ("pdf", "png"):
-    fig.savefig(os.path.join(HERE, f"fig_selfaware.{ext}"), dpi=400, bbox_inches="tight")
+    fig.savefig(os.path.join(HERE, f"fig_shared_bias_screen.{ext}"), dpi=400, bbox_inches="tight")
 
 print(
-    "wrote fig_selfaware.pdf/.png; "
+    "wrote fig_shared_bias_screen.pdf/.png; "
     f"plain risk={ft_plain[0]:.4f}->{ft_plain[-1]:.4f}; "
     f"spread-screen risk={ft_percomp[0]:.4f}->{ft_percomp[-1]:.4f}; "
     f"Pearson={pearson:.3f}"

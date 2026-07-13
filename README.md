@@ -11,7 +11,7 @@ Kai You, and Long Zhang (corresponding author: 20230100@huat.edu.cn)
 
 ## Which files should be used?
 
-The authoritative **v2.0.0 SIMPAT revision package** is in
+The **v2.0.1 SIMPAT revision package** is in
 [`simpat_revision/`](simpat_revision/). It contains the frozen arrays,
 reference-gradient verification, risk--coverage and finite-budget analyses,
 repeated calibration and training audits, matched-cost multistep optimization,
@@ -109,7 +109,8 @@ Use the concept DOI for the latest version and all-version citation:
 
 | Release | Role | DOI |
 |---|---|---|
-| v2.0.0 | Current SIMPAT revision package | see the current version under the concept DOI |
+| v2.0.1 | Current SIMPAT revision package | version DOI assigned after release |
+| v2.0.0 | Previous SIMPAT revision package | https://doi.org/10.5281/zenodo.21331538 |
 | v1.0.0 | Legacy reproducibility snapshot | https://doi.org/10.5281/zenodo.21005574 |
 
 Release-specific metadata are recorded in [`CITATION.cff`](CITATION.cff) and

@@ -129,7 +129,7 @@ def main() -> None:
 
     # h=0.10 was executed twice.  The dedicated h10 file is the reported run
     # (and overrides the later checkpoint file in ``lookup`` above); the later
-    # run is retained as a sign-repeatability check rather than silently
+    # run is retained as a sign-repeatability check rather than
     # discarded.  This table is evidence of repeat execution, not a mesh study.
     raw_lookup = {}
     if RAW.exists():

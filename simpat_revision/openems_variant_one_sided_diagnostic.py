@@ -52,7 +52,7 @@ def main() -> None:
                         float(d["fd_grad"][i]), "189x189x71", p.name))
 
     # The tuned large-aperture NPZ omitted Q+/-; recover the printed values from
-    # the authoritative archived log.  They have four-to-five significant digits,
+    # the archived source log. They have four-to-five significant digits,
     # sufficient for the one-sided sign diagnostic but not precision claims.
     log = (ROOT / "_gradR2t.log").read_text(encoding="utf-8", errors="replace")
     qvals = {}

@@ -18,7 +18,7 @@
 # cross-seed SIGN AGREEMENT, not by gradient MAGNITUDE.  Solver-free where seeds agree;
 # spend ONE full-wave solve only where they disagree.
 #
-# HONEST NUMBERS ONLY (no fabrication; provenance documented):
+# Values below are taken from the archived analyses; provenance is documented.
 #   hero/payoff = AUC 0.91 predicting per-component gradient SIGN-correctness on an EXTERNAL
 #                 transfer-matrix (thin-film TMM) benchmark [0.906, 95% CI [0.833, 0.965];
 #                 880 pooled comps -- see AUC_CONFIDENCE_INTERVALS.md].
@@ -348,7 +348,7 @@ ax.text(pbx + pbw / 2, pby + 0.060, 'SOLVER', ha='center', va='center',
 ax.text(pbx + pbw / 2, pby + 0.030, 'FREE', ha='center', va='center',
         fontsize=10.5, color='white', fontweight='bold', zorder=5)
 
-# ---- honest concrete verdict line (bottom of the band; no tick/cross -- colour carries it) ----
+# ---- Result line at the bottom of the band; colour identifies the case. ----
 vy_line = SBY0 + 0.026
 ax.text(0.330, vy_line, 'trusts the impedance gradient', ha='left', va='center',
         fontsize=9.6, color=GRN, fontweight='bold')

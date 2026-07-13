@@ -14,7 +14,7 @@ The reviewer's objection is that the current "allocator" is just a fixed thresho
 with sign-agreement `>= tau` (autodiff on the rest get one full-wave finite-difference (FD) solve). That gives
 a **variable, uncontrolled** number of solves and no notion of "the best gradient for a fixed budget."
 
-**New algorithm — rank-and-allocate.** Given a fixed budget `B ∈ {0..K}` FD solves:
+**Rank-and-allocate procedure.** Given a fixed budget `B ∈ {0..K}` FD solves:
 1. **Rank** the `K` components by a cheap gate-reliability score (ensemble **sign-agreement**, ties broken by
    **SNR**; an SNR-ranked variant is also evaluated).
 2. **Allocate** the `B` solves to the `B` **least-reliable** components (greedy: correct the most-likely-wrong
@@ -54,7 +54,7 @@ random→oracle improvement; its frontier area is within **1.58×** the oracle's
 
 ---
 
-## 3. Relationship to the threshold gate — the honest core result
+## 3. Relationship to the threshold gate
 
 This is the part that answers the reviewer directly, and it is **not** the naive "we beat the threshold by X %."
 
@@ -83,7 +83,7 @@ components — **the same set** rank-and-allocate picks for that budget. Conditi
 Rank-and-allocate **subsumes** it and adds the missing capability the reviewer asked for: a **controllable**
 budget (fixed `B`, cost std **0** vs the gate's **1.16**), plus the explicit per-`B` frontier.
 
-### 3.3 Honest note on "−36 % at the gate's average cost"
+### 3.3 Interpretation of "−36 % at the gate's average cost"
 A naive comparison ("at the gate's mean cost 2.206, rank-allocate interpolates to 0.194 vs the gate's 0.143")
 makes the gate look **36 % better**. This is a **Jensen's-inequality artifact**, not a real subset advantage:
 the gate's mean cost is *fractional* (2.206) and the error-vs-`B` curve is *convex*, so the average of the
@@ -128,7 +128,7 @@ illustration, not evidence; the 20 000-trial controlled spectrum (§2–3) is th
 Area under frontier: rank (sign-agree) **7.70**, random **8.10**, oracle **5.47** → rank-allocate by
 sign-agreement is **4.9 % smaller area than random** and dominates random at `B = 1..4`.
 
-**Honest caveat (important):** on this device the cheap scores are only weakly informative, and the *SNR* ranking
+**Scope:** on this device the cheap scores are only weakly informative, and the *SNR* ranking
 is actively *miscalibrated*:
 - Sign-agreement rank-order vs the true error-order: Spearman **+0.26** (weakly useful — it FDs the genuinely
   high-error zones 3 and 1 early, hence it beats random).
@@ -142,7 +142,7 @@ claim is made from it.
 
 ---
 
-## 5. Verdict (honest)
+## 5. Result
 
 **Does rank-and-allocate dominate the threshold gate?**
 - **Not in the sense of "lower error at the same realized cost"** — it *cannot*, because the fixed-`tau` gate is
@@ -163,7 +163,7 @@ sits within **1.58×** the oracle's frontier area. It does **not** reach the ora
 0.216 vs the oracle's 0.097), because the cheap reliability score is an imperfect proxy for which components are
 truly wrong; the oracle uses the unobservable true error.
 
-**Bottom line.** The honest, defensible contribution is **controllability + provable optimality of the ordering
+The supported contribution is **controllability + provable optimality of the ordering
 under the cheap score**, not a free accuracy win over the existing gate. The allocator (i) gives an exact,
 pre-specifiable solver budget, (ii) is provably the threshold gate's superset, (iii) dominates random ordering by
 ~43 %, and (iv) closes ~70 % of the gap to the unattainable oracle. The device result is supportive but
