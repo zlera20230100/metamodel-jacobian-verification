@@ -11,7 +11,7 @@ Kai You, and Long Zhang (corresponding author: 20230100@huat.edu.cn)
 
 ## Repository contents
 
-The files for version 2.0.2 are in [`simpat_revision/`](simpat_revision/).
+The files for version 2.0.3 are in [`simpat_revision/`](simpat_revision/).
 This directory contains the archived arrays,
 reference-gradient verification, risk--coverage and finite-budget analyses,
 repeated calibration and training audits, matched-cost multistep optimization,
@@ -23,7 +23,7 @@ available for provenance. They should not be used to reconstruct the revised
 SIMPAT claims. The immutable v1 tree is also available at tag
 [`v1.0.0`](https://github.com/zlera20230100/metamodel-jacobian-verification/tree/v1.0.0).
 
-## Scope of version 2.0.2
+## Scope of version 2.0.3
 
 - Three independently implemented reference regimes provide 3,580 external
   design-gradient components: near-saturated TMM, stressed TMM, and stressed
@@ -110,7 +110,8 @@ Use the concept DOI for the latest version and all-version citation:
 
 | Release | Role | DOI |
 |---|---|---|
-| v2.0.2 | Current SIMPAT package | https://doi.org/10.5281/zenodo.21352345 |
+| v2.0.3 | Current SIMPAT package | https://doi.org/10.5281/zenodo.21353884 |
+| v2.0.2 | Previous SIMPAT package | https://doi.org/10.5281/zenodo.21352345 |
 | v2.0.1 | Previous SIMPAT package | https://doi.org/10.5281/zenodo.21331830 |
 | v2.0.0 | Previous SIMPAT revision package | https://doi.org/10.5281/zenodo.21331538 |
 | v1.0.0 | Legacy reproducibility snapshot | https://doi.org/10.5281/zenodo.21005574 |

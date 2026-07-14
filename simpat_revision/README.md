@@ -194,8 +194,8 @@ from the public release.
 ## Archive status
 
 The versioned project archive is available through the concept DOI
-<https://doi.org/10.5281/zenodo.21005573>. Public release `v2.0.2`
-(<https://doi.org/10.5281/zenodo.21352345>) contains the archived data and
+<https://doi.org/10.5281/zenodo.21005573>. Public release `v2.0.3`
+(<https://doi.org/10.5281/zenodo.21353884>) contains the archived data and
 analyses used here; the immutable `v1.0.0` snapshot remains available for
 provenance. This release clarifies
 actual versus nominal screening cost, corrects the antenna score label to the

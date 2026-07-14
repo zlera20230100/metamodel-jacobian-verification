@@ -1,9 +1,9 @@
 {
   "title": "Reference-Calibrated Verification of Metamodel Design Jacobians under Finite Simulation Budgets: Code and Data",
   "upload_type": "software",
-  "version": "v2.0.2",
+  "version": "v2.0.3",
   "publication_date": "2026-07-14",
-  "description": "This release provides the data and scripts used for the numerical analyses in the accompanying manuscript. The archive covers 3,580 reference-gradient components, calibration and training checks, reference-cost accounting, matched-cost multistep optimization, openEMS step-ladder records, and the source files for the figures. Across the tested trajectories, none of the deployable score orderings consistently outperformed random allocation. The openEMS antenna derivatives failed the step-size screen and were not used in the quantitative reliability analysis. The device-specific PINN training framework is not part of this release.",
+  "description": "Version 2.0.3 replaces the archive container with a standards-compliant ZIP whose internal paths use forward slashes for cross-platform extraction. The data, scripts, numerical results, and reported claims are unchanged from version 2.0.2. This release provides the data and scripts used for the numerical analyses in the accompanying manuscript. The archive covers 3,580 reference-gradient components, calibration and training checks, reference-cost accounting, matched-cost multistep optimization, openEMS step-ladder records, and the source files for the figures. Across the tested trajectories, none of the deployable score orderings consistently outperformed random allocation. The openEMS antenna derivatives failed the step-size screen and were not used in the quantitative reliability analysis. The device-specific PINN training framework is not part of this release.",
   "license": "MIT",
   "access_right": "open",
   "language": "eng",
