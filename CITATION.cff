@@ -5,7 +5,7 @@ type: software
 version: 2.0.1
 date-released: 2026-07-12
 doi: 10.5281/zenodo.21331830
-repository-code: "https://github.com/zlera20230100/direction-not-magnitude"
+repository-code: "https://github.com/zlera20230100/metamodel-jacobian-verification"
 url: "https://doi.org/10.5281/zenodo.21331830"
 license: MIT
 keywords:

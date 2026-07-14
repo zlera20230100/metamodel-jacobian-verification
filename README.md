@@ -4,7 +4,7 @@ Reproducibility code and data for the revised manuscript prepared for submission
 *Simulation Modelling Practice and Theory*.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21005573.svg)](https://doi.org/10.5281/zenodo.21005573)
-[![release](https://img.shields.io/github/v/release/zlera20230100/direction-not-magnitude)](https://github.com/zlera20230100/direction-not-magnitude/releases)
+[![release](https://img.shields.io/github/v/release/zlera20230100/metamodel-jacobian-verification)](https://github.com/zlera20230100/metamodel-jacobian-verification/releases)
 
 Xuan Qin, Xuan Shi, Nimako Samuel Boateng, Bokai Huang, Shengjun Wu,
 Kai You, and Long Zhang (corresponding author: 20230100@huat.edu.cn)
@@ -21,7 +21,7 @@ manifest used by the revised manuscript.
 Files at the repository root reproduce the original v1.0.0 release and remain
 available for provenance. They should not be used to reconstruct the revised
 SIMPAT claims. The immutable v1 tree is also available at tag
-[`v1.0.0`](https://github.com/zlera20230100/direction-not-magnitude/tree/v1.0.0).
+[`v1.0.0`](https://github.com/zlera20230100/metamodel-jacobian-verification/tree/v1.0.0).
 
 ## Evidence represented by v2.0.0
 
