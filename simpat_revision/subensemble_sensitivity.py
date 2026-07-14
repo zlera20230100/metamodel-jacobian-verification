@@ -52,7 +52,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     here = Path(__file__).resolve().parent
     parser.add_argument("--analysis-dir", type=Path, default=here)
-    parser.add_argument("--package-dir", type=Path, default=here.parent / "reproducibility_update")
+    parser.add_argument("--package-dir", type=Path, default=here)
     args = parser.parse_args()
     analysis_dir = args.analysis_dir.resolve()
     package_dir = args.package_dir.resolve()
@@ -122,7 +122,9 @@ def main() -> None:
     ):
         analysis_path = analysis_dir / name
         frame.to_csv(analysis_path, index=False, float_format="%.12g")
-        shutil.copy2(analysis_path, package_dir / name)
+        package_path = package_dir / name
+        if analysis_path.resolve() != package_path.resolve():
+            shutil.copy2(analysis_path, package_path)
 
     script_target = package_dir / Path(__file__).name
     if Path(__file__).resolve() != script_target.resolve():

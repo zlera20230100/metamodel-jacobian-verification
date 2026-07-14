@@ -773,14 +773,35 @@ def plot_figure(out_dir: Path, datasets: list[dict], metrics: pd.DataFrame) -> N
     ax0.set_ylim(-0.008, 0.245)
     ax0.grid(axis="y", color="#D9D9D9", lw=0.6, alpha=0.75)
     ax0.legend(loc="upper left", fontsize=7.7, handlelength=2.2)
+    for key_x, key_marker in zip((0.045, 0.075, 0.105), ("o", "s", "^")):
+        ax0.plot(
+            key_x,
+            0.066,
+            marker=key_marker,
+            markersize=4.8,
+            markerfacecolor="none",
+            markeredgecolor="#4D4D4D",
+            markeredgewidth=0.85,
+            linestyle="none",
+            transform=ax0.transAxes,
+        )
+    ax0.text(
+        0.135,
+        0.066,
+        "Open markers: $\\tau=0.9$",
+        transform=ax0.transAxes,
+        fontsize=7.2,
+        color="#4D4D4D",
+        va="center",
+    )
     ax0.text(
         0.03,
-        0.04,
-        "Open markers: $\\tau=0.9$ (one per benchmark)\n"
+        0.012,
         "Error bars: query-cluster bootstrap 95% CI",
         transform=ax0.transAxes,
         fontsize=7.2,
         color="#4D4D4D",
+        va="bottom",
     )
 
     op = metrics[np.isclose(metrics["threshold"], 0.9)].copy()
@@ -846,8 +867,10 @@ def plot_figure(out_dir: Path, datasets: list[dict], metrics: pd.DataFrame) -> N
     ax1.grid(axis="y", color="#D9D9D9", lw=0.6, alpha=0.75)
     ax1.legend(loc="upper left", fontsize=7.5)
     fig.subplots_adjust(left=0.085, right=0.985, bottom=0.20, top=0.90)
+    fig.savefig(out_dir / "fig_risk_coverage.svg", bbox_inches="tight", pad_inches=0.03)
     fig.savefig(out_dir / "fig_risk_coverage.pdf", bbox_inches="tight", pad_inches=0.03)
-    fig.savefig(out_dir / "fig_risk_coverage.png", dpi=600, bbox_inches="tight", pad_inches=0.03)
+    fig.savefig(out_dir / "fig_risk_coverage.png", dpi=300, bbox_inches="tight", pad_inches=0.03)
+    fig.savefig(out_dir / "fig_risk_coverage.tiff", dpi=600, bbox_inches="tight", pad_inches=0.03)
     plt.close(fig)
 
 

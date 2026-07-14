@@ -1,4 +1,4 @@
-"""Audit the two exploratory openEMS antenna variants already cited in the draft.
+"""Evaluate the two fixed-step openEMS antenna variants reported in the manuscript.
 
 Both variants were evaluated only at +/-5%.  This script checks whether their
 two one-sided slopes relative to the archived baseline even have the same sign.
@@ -36,7 +36,7 @@ def row(case, zone, h, q0, qp, qm, central, mesh, source):
         "mesh_cells": mesh,
         "step_ladder_available": 0,
         "mesh_refinement_available": 0,
-        "status": "exploratory fixed-step observation; not a verified gradient",
+        "status": "fixed-step observation; not reference-gradient evidence",
         "source": source,
     }
 

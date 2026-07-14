@@ -1,22 +1,22 @@
-# Reproducibility supplement for the SIMPAT submission
+# Code and data
 
 This directory accompanies *Reference-Calibrated Verification of Metamodel
-Design Jacobians under Finite Simulation Budgets*. It separates
-frozen-result replay, optional surrogate retraining, numerical verification of
-reference labels, and device-level forward-response evidence. These evidence
-tiers must not be conflated.
+Design Jacobians under Finite Simulation Budgets*. It contains archived-result
+reproduction, optional surrogate retraining, numerical checks of the reference
+labels, and device-level forward-response data. Each part is documented
+separately below.
 
 `evidence_artifact_manifest.csv` records the SHA-256 digest and byte size of
 the frozen inputs, full-wave logs, and component-level verification table used
 by this supplement.
 
-## Evidence boundary
+## Scope of the evidence
 
 - The reference-labelled quantitative claims use only the two transfer-matrix
   benchmarks and the heat/Poisson benchmark: 3,580 gradient components in
   total.
 - All 3,580 reference signs pass the declared step-size/independent-derivative
-  screen. The heat benchmark additionally passes the 160/320/640-cell sign
+  screen. The heat benchmark also passes the 160/320/640-cell sign
   check. See `reference_gradient_verification.md` and the three
   `reference_gradient_*.csv` files.
 - The openEMS antenna runs do **not** provide reference-gradient labels. All six
@@ -29,9 +29,9 @@ by this supplement.
   figure arrays are frozen-output redraw inputs, not a from-scratch training
   release.
 
-## 1. Frozen-result replay (no training and no reference-simulator call)
+## 1. Reproduce the archived results (no training or reference-simulator call)
 
-The following files reproduce the revision analyses from frozen arrays:
+The following files reproduce the reported analyses from frozen arrays:
 
 - `analyze_external_baselines.py`: head-to-head mean-aligned sign, SNR, and
   magnitude comparisons; query-cluster bootstrap intervals; matched-coverage
@@ -43,13 +43,24 @@ The following files reproduce the revision analyses from frozen arrays:
 - `fig_external_score_comparison.py` and `fig_external_score_comparison.pdf`:
   the main score-comparison figure.
 - `risk_coverage_simpat.py`, the three `extbench_*.npz` files, and
-  `fig_risk_coverage.pdf`: threshold-0.9 risk--coverage and exact central-FD
-  cost accounting.
+  `fig_risk_coverage.pdf`: threshold-0.9 risk--coverage and nominal two-call
+  central-FD correction accounting.
 - `scale_bias_analysis.py` and `fig_scale_bias_analysis.pdf`: fixed-seed scale-coupling and
   shared-bias theory illustration.
-- `graphical_abstract_simpat.py`: deterministic Matplotlib graphical abstract
-  with PDF, SVG, and high-resolution PNG outputs; no generative imagery is
-  used.
+- `figure_sources/fig_workflow_visio.R` with
+  `fig_workflow_nodes.csv` and `fig_workflow_edges.csv`: deterministic base-R
+  source and traceable layout data for Fig. 1. The script enforces orthogonal
+  routing and stops if a connector crosses a node; it exports PDF, SVG,
+  300-dpi PNG, and 600-dpi TIFF.
+- `figure_sources/fig_method.py`: deterministic Matplotlib source for the
+  antenna stack, geometry-conditioned PINN schematic, and forward-response
+  evidence figure. The latter reads `fpc_result.npz`, `hq_pattern.npz`, and
+  `closure_directive.npz` from the same directory. Framework connectors use
+  explicit boundary ports and orthogonal routes.
+- `graphical_abstract_simpat.R`, `graphical_abstract_sign_matrix.csv`, and
+  `graphical_abstract_operating_points.csv`: deterministic R/grid source and
+  traceable inputs for the graphical abstract. The script validates orthogonal
+  connector routes and exports editable PDF/SVG, 300-dpi PNG, and 600-dpi TIFF.
 - `repeated_split_calibration.py`: 200 independent calibration/test splits
   over the declared candidate thresholds, with 10,000 query-cluster bootstrap
   replicates per split.
@@ -59,11 +70,12 @@ The following files reproduce the revision analyses from frozen arrays:
   of independently trained ensemble members.
 - `training_repeat_audit.py`: ten complete training repeats for each external
   benchmark regime, reported separately from within-ensemble variation.
-- `break_even_reference_cost.py`: amortized accounting for calibration and
-  component-verification calls.
+- `break_even_reference_cost.py`: amortized accounting that separates actual
+  calibration and deployment-screen calls from nominal two-call corrections.
 - `multistep_tmm_budget_optimization.py`: a matched-cost, 20-step projected
   optimization audit with exactly 240 reference calls per start for each
-  deployable allocation rule.
+  deployable allocation rule. The plotting stage exports PDF and editable SVG,
+  together with a 300-dpi PNG preview and 600-dpi TIFF line-art file.
 
 From this directory, with Python 3.11 or newer:
 
@@ -76,11 +88,13 @@ python repeated_split_calibration.py
 python tie_sensitivity.py
 python subensemble_sensitivity.py
 python training_repeat_audit.py
-python break_even_reference_cost.py
+python break_even_reference_cost.py --package-dir .
 python multistep_tmm_budget_optimization.py
+Rscript figure_sources/fig_workflow_visio.R
+python figure_sources/fig_method.py
 python fig_external_score_comparison.py
 python scale_bias_analysis.py
-python graphical_abstract_simpat.py
+Rscript graphical_abstract_simpat.R
 ```
 
 The **calibration results cited by the manuscript** are computed by
@@ -93,14 +107,15 @@ predeclared from the intended loss or selected with an additional
 multiplicity-aware protocol.
 
 `split_calibration_candidates.csv` and `split_calibration_selection.csv` are
-older, sign-only exploratory outputs emitted by `risk_coverage_simpat.py`.
-They are retained for auditability but are **not** the manuscript's primary
-per-score calibration evidence.
+sign-only auxiliary outputs from `risk_coverage_simpat.py`. They are retained
+for auditability but are **not** the manuscript's primary per-score calibration
+evidence.
 
 Both analysis scripts use 10,000 query-cluster bootstrap replicates and seed
-`20260711`; the allocator uses 512 truth-blind random tie breaks. One central
-finite-difference component check is charged as two reference-objective
-evaluations.
+`20260711`; the allocator uses 512 truth-blind random tie breaks. One nominal
+central-difference correction is charged as two reference-objective evaluations.
+Additional step-size, independent-derivative, grid, or sentinel calls must be
+entered separately for an actual deployment cost and break-even calculation.
 
 ## 2. Optional reconstruction of the per-member artifacts (retraining)
 
@@ -157,7 +172,7 @@ The submitted frozen records are:
 - `openems_step_ladder_h10_repeatability.csv`: cross-run sign and numerical
   comparison; and
 - `openems_variant_one_sided_diagnostic.csv`: why the two fixed-step antenna
-  variants are exploratory rather than verified gradients.
+  variants are fixed-step observations rather than verified gradients.
 
 `openems_step_ladder.py`, `summarize_openems_step_ladder.py`,
 `parse_openems_mesh_logs.py`, and
@@ -168,18 +183,22 @@ not needed to inspect or replay the controlled benchmark results. A successful
 step-size audit would still not constitute mesh convergence; the supplied audit
 in fact fails because every zone changes sign at `h=0.10`.
 
-## 5. Figure redraw provenance
+## 5. Figure source files
 
-`figure_revisions/` contains deterministic redraw scripts, frozen inputs, and
-vector/raster outputs. The current controlled-only hybrid figure deliberately
-omits a device-gradient panel. Historical reliability and score-limitation redraws that
-are not cited by the current manuscript remain in the local working tree but
-are deliberately excluded from the submission archive; they do not add
-claims.
+`figure_sources/` contains deterministic plotting scripts, frozen inputs, and
+vector/raster outputs for the figures used by the manuscript. The controlled
+hybrid figure omits the device-gradient panel because the corresponding
+reference derivative is unresolved. Unused exploratory plots are excluded
+from the public release.
 
 ## Archive status
 
 The versioned project archive is available through the concept DOI
-<https://doi.org/10.5281/zenodo.21005573>. Release `v2.0.1` contains this
-revised SIMPAT supplement; the immutable `v1.0.0` snapshot remains available
-for provenance.
+<https://doi.org/10.5281/zenodo.21005573>. Public release `v2.0.2`
+(<https://doi.org/10.5281/zenodo.21352345>) contains the archived data and
+analyses used here; the immutable `v1.0.0` snapshot remains available for
+provenance. This release clarifies
+actual versus nominal screening cost, corrects the antenna score label to the
+operational mean-aligned definition, and updates the figure sources. These
+documentation and accounting changes do not alter the frozen arrays or
+quantitative results.

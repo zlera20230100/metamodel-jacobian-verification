@@ -58,7 +58,7 @@ for j, (method, label, color, hatch) in enumerate(zip(methods, method_labels, co
     for px, value, upper in zip(pos, vals, hi):
         ax.text(px, upper + 0.010, f"{value:.3f}", ha="center", va="bottom", fontsize=6.8)
 ax.axhline(0.5, color="#555555", lw=1.0, ls=(0, (4, 3)), zorder=1)
-ax.text(0.01, 0.505, "chance", transform=ax.get_yaxis_transform(), ha="left", va="bottom",
+ax.text(0.50, 0.535, "chance", ha="center", va="bottom",
         fontsize=7.7, color="#555555")
 ax.set_ylim(0.5, 1.045)
 ax.set_ylabel("sign-correctness AUC (cluster 95% CI)")
@@ -87,6 +87,7 @@ fig.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, 1.02), ncol
            columnspacing=1.8, handlelength=2.0)
 fig.tight_layout(rect=(0, 0, 1, 0.93), pad=1.2)
 
-for ext in ("pdf", "png"):
-    fig.savefig(HERE / f"fig_external_score_comparison.{ext}", dpi=400, bbox_inches="tight")
-print("wrote fig_external_score_comparison.pdf/.png")
+for ext in ("pdf", "svg", "png", "tiff"):
+    dpi = 300 if ext == "png" else (600 if ext == "tiff" else None)
+    fig.savefig(HERE / f"fig_external_score_comparison.{ext}", dpi=dpi, bbox_inches="tight")
+print("wrote fig_external_score_comparison.pdf/.svg/.png/.tiff")

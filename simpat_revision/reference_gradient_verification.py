@@ -11,8 +11,10 @@ an independent derivative of the same reference model:
 
 The archived per-member gradients are used to reconstruct the operational
 mean-aligned-sign score and ensemble-mean correctness label. Components are
-filtered only if the reference derivative is declared unresolved, so the script
-shows whether numerical resolution changes the reported AUC/risk values.
+retained only when the reference derivative is resolved and its sign agrees
+across the h/2, h, and 2h ladder and the independent derivative check. The
+script therefore tests whether numerical screening changes the reported
+AUC/risk values.
 
 Outputs
 -------
@@ -36,10 +38,8 @@ HERE = Path(__file__).resolve().parent
 
 def parse_args() -> argparse.Namespace:
     """Resolve portable input/output paths for analysis and packaged use."""
-    local_member_file = HERE / "external_members_tmm_easy.npz"
-    default_data = HERE if local_member_file.is_file() else HERE.parent / "reproducibility_update"
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", type=Path, default=default_data)
+    parser.add_argument("--data-dir", type=Path, default=HERE)
     parser.add_argument("--out-dir", type=Path, default=HERE)
     return parser.parse_args()
 
@@ -439,6 +439,9 @@ def label_metrics(rows: list[dict], data_dir: Path) -> list[dict]:
         ref_sign_stable = np.asarray([
             (int(r["sign_h"]) == int(r["sign_independent"]) != 0) for r in rr
         ])
+        step_ladder_stable = np.asarray([
+            bool(r["retain_h2_vs_h"]) and bool(r["retain_2h_vs_h"]) for r in rr
+        ])
         data = np.load(path)
         members = np.asarray(data["member_gradients"], dtype=float)
         reference = np.asarray(data["reference_gradients"], dtype=float)
@@ -454,7 +457,7 @@ def label_metrics(rows: list[dict], data_dir: Path) -> list[dict]:
         correct = correct.reshape(-1)
         if score.size != len(rr):
             raise RuntimeError(f"{benchmark}: frozen array size {score.size} != reconstructed {len(rr)}")
-        keep = resolved & ref_sign_stable
+        keep = resolved & step_ladder_stable & ref_sign_stable
         y = correct[keep]
         s = score[keep]
         accepted = s >= 0.9

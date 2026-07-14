@@ -44,15 +44,9 @@ CORRECTIONS = {
 
 def parse_args() -> argparse.Namespace:
     here = Path(__file__).resolve().parent
-    if here.name.lower() == "reproducibility_update":
-        package_dir = here
-        analysis_dir = here.parent / "analysis"
-    else:
-        analysis_dir = here
-        package_dir = here.parent / "reproducibility_update"
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--analysis-dir", type=Path, default=analysis_dir)
-    parser.add_argument("--package-dir", type=Path, default=package_dir)
+    parser.add_argument("--analysis-dir", type=Path, default=here)
+    parser.add_argument("--package-dir", type=Path, default=here)
     parser.add_argument("--splits", type=int, default=200)
     parser.add_argument("--bootstrap", type=int, default=10_000)
     parser.add_argument("--seed", type=int, default=20260712)
@@ -271,7 +265,7 @@ def summarize(runs: pd.DataFrame, risk_target: float) -> pd.DataFrame:
 
 
 def write_csv(frame: pd.DataFrame, filename: str, destinations: list[Path]) -> None:
-    for destination in destinations:
+    for destination in dict.fromkeys(path.resolve() for path in destinations):
         destination.mkdir(parents=True, exist_ok=True)
         frame.to_csv(destination / filename, index=False, float_format="%.10g")
 

@@ -2,7 +2,7 @@ matplotlib>=3.8
 numpy>=1.26
 pandas>=2.1
 scipy>=1.11
-# Used by archived generator/redraw scripts; not needed by the core CSV replay.
+# Used by benchmark and figure scripts; not needed by the core CSV replay.
 scikit-learn>=1.4
 # Used only for optional external-surrogate reconstruction/retraining.
 torch>=2.2

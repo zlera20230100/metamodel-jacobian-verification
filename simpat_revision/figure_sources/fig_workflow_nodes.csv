@@ -1,0 +1,14 @@
+id,phase,shape,x,y,w,h,title,detail,math,fill,edge
+A1,ensemble,rect,0.130,0.735,0.180,0.115,Independent retrains,M fitted metamodels,0,blue_pale,blue
+A2,ensemble,rect,0.130,0.535,0.180,0.115,Component Jacobians,,1,blue_pale,blue
+A3,ensemble,rect,0.130,0.335,0.180,0.115,Candidate scores,"sign agreement; SNR; magnitude",0,blue_pale,blue
+B1,calibration,rect,0.437,0.735,0.255,0.095,Reference simulator,"representative calibration queries",0,grey_pale,grey
+B2,calibration,rect,0.437,0.590,0.255,0.095,Numerical derivative screen,"step / grid / independent check",0,grey_pale,grey
+B3,calibration,rect,0.437,0.435,0.255,0.105,Verified calibration labels,"component correctness and gradient loss",0,grey_pale,grey
+B4,calibration,rect,0.437,0.280,0.255,0.105,Select operating rule,"score; threshold; empirical risk / coverage",0,blue_pale,blue
+B5,calibration,rect,0.437,0.115,0.255,0.085,ABSTAIN / refine reference,"used when the derivative screen fails",0,warm_pale,warm
+C1,deployment,rect,0.807,0.735,0.285,0.110,Selected score,,1,blue_pale,blue
+C2,deployment,diamond,0.807,0.545,0.170,0.120,Operating rule,,1,white,blue
+C3,deployment,rect,0.715,0.355,0.135,0.105,ACCEPT,,1,blue_pale,blue
+C4,deployment,rect,0.900,0.355,0.135,0.105,VERIFY,"central FD\\n2 simulator calls",0,warm_pale,warm
+C5,deployment,rect,0.807,0.150,0.285,0.115,Reported outputs,,1,blue_pale,blue

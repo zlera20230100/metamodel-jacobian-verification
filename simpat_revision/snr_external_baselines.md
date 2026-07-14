@@ -212,13 +212,13 @@ threshold-0.9 risks and coverages unchanged.
    gradient error more effectively even when SNR has higher sign-correctness AUC. Select a score
    against the intended deployment loss using calibration data.
 3. The operational algorithm uses the mean-aligned sign fraction so that the score refers to the
-   direction actually returned by the ensemble mean. Retain modal agreement only as a historical
+   direction actually returned by the ensemble mean. Retain modal agreement only as an auxiliary
    comparison; threshold-0.9 headline values remain unchanged here.
 4. Positive-rescaling invariance is a robustness property; it is not evidence of superior
    discrimination.
 5. The main manuscript reports the head-to-head AUC, risk--coverage, split-calibration, and
    fixed-budget results together.
-6. Score selection remains inside the calibration protocol. A new domain may legitimately choose SNR,
+6. Score selection remains inside the calibration protocol. A deployment domain may select SNR,
    magnitude, sign agreement, or abstention; test data must not be used to select the score or its
    threshold.
 

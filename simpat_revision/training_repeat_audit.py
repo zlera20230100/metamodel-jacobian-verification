@@ -39,16 +39,15 @@ ARCHIVES = {
 
 def parse_args() -> argparse.Namespace:
     here = Path(__file__).resolve().parent
-    default_repro = here.parent / "reproducibility_update"
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repeats", type=int, default=5)
     parser.add_argument("--members", type=int, default=10)
     parser.add_argument("--tau", type=float, default=0.9)
     parser.add_argument("--data-seed-base", type=int, default=17001)
     parser.add_argument("--member-seed-base", type=int, default=29000)
-    parser.add_argument("--archive-dir", type=Path, default=default_repro)
+    parser.add_argument("--archive-dir", type=Path, default=here)
     parser.add_argument("--out-dir", type=Path, default=here)
-    parser.add_argument("--mirror-dir", type=Path, default=default_repro)
+    parser.add_argument("--mirror-dir", type=Path, default=here)
     parser.add_argument("--regime", choices=("all", *REGIMES), default="all")
     return parser.parse_args()
 

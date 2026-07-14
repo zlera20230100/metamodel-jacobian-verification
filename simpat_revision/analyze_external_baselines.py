@@ -6,9 +6,9 @@ Inputs are the validated per-member gradient artifacts produced by
 member gradients, ensemble-mean sign-correctness label, query-cluster resamples,
 calibration/test split, and finite-difference correction budgets.
 
-The script writes detailed CSV/Markdown results to ``analysis`` and mirrors them
-into the submission ``reproducibility_update`` directory.  Figures and frozen
-artifacts live in ``reproducibility_update``.  It never edits the manuscript.
+The script writes detailed CSV/Markdown results beside the source files by
+default. Separate output and mirror directories can be supplied on the command
+line. It never edits the manuscript.
 """
 
 from __future__ import annotations
@@ -90,15 +90,9 @@ METHOD_MARKERS = {
 
 def parse_args() -> argparse.Namespace:
     script_dir = Path(__file__).resolve().parent
-    if script_dir.name.lower() == "reproducibility_update":
-        package_dir = script_dir
-        analysis_dir = script_dir.parent / "analysis"
-    else:
-        analysis_dir = script_dir
-        package_dir = script_dir.parent / "reproducibility_update"
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--analysis-dir", type=Path, default=analysis_dir)
-    parser.add_argument("--package-dir", type=Path, default=package_dir)
+    parser.add_argument("--analysis-dir", type=Path, default=script_dir)
+    parser.add_argument("--package-dir", type=Path, default=script_dir)
     parser.add_argument("--bootstrap", type=int, default=10_000)
     parser.add_argument("--tie-repetitions", type=int, default=512)
     parser.add_argument("--seed", type=int, default=20260711)
@@ -1257,13 +1251,13 @@ threshold-0.9 risks and coverages unchanged.
    gradient error more effectively even when SNR has higher sign-correctness AUC. Select a score
    against the intended deployment loss using calibration data.
 3. The operational algorithm uses the mean-aligned sign fraction so that the score refers to the
-   direction actually returned by the ensemble mean. Retain modal agreement only as a historical
+   direction actually returned by the ensemble mean. Retain modal agreement only as an auxiliary
    comparison; threshold-0.9 headline values remain unchanged here.
 4. Positive-rescaling invariance is a robustness property; it is not evidence of superior
    discrimination.
 5. The main manuscript reports the head-to-head AUC, risk--coverage, split-calibration, and
    fixed-budget results together.
-6. Score selection remains inside the calibration protocol. A new domain may legitimately choose SNR,
+6. Score selection remains inside the calibration protocol. A deployment domain may select SNR,
    magnitude, sign agreement, or abstention; test data must not be used to select the score or its
    threshold.
 

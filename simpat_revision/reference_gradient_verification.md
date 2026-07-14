@@ -84,7 +84,7 @@ The released antenna quantity is
 
 where `Q_ap=mean |E_z|^2` on a frequency-domain aperture plane at 24 GHz. The
 nominal six-zone run used `h=0.05` and a 189 x 189 x 78 mesh (2,786,238 FDTD
-cells). The new `h=0.025` and `h=0.10` runs use the same mesh recipe. Zone 0,
+cells). The `h=0.025` and `h=0.10` runs use the same mesh recipe. Zone 0,
 for example, changes from `+0.120` to `+0.361` and approximately `-0.46` across
 the three steps; all other zones have the same positive/positive/negative
 pattern. An independent repeat of the `h=0.10` run preserves all six negative
@@ -111,7 +111,7 @@ is retained in the manuscript.
 - `summarize_openems_step_ladder.py`, `openems_step_ladder_summary.csv`, and
   `openems_step_ladder_h10_repeatability.csv`: six-zone summary and repeatability.
 - `parse_openems_mesh_logs.py` and `openems_mesh_inventory.csv`: mesh dimensions
-  printed by every new run.
+  printed by each rerun.
 
 Reproduction commands from the supplement directory:
 

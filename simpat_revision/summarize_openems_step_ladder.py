@@ -1,4 +1,4 @@
-"""Summarize archived/new openEMS finite-difference step checks.
+"""Summarize the archived openEMS finite-difference step checks.
 
 The summary deliberately separates step-size evidence from mesh evidence.  A
 successful h/2,h,2h sign check does not set ``mesh_verified`` to true.

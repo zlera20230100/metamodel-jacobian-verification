@@ -107,7 +107,7 @@ def main() -> None:
                 "fd_grad": grad,
                 "s11_plus": rp["s11_24"],
                 "s11_minus": rm["s11_24"],
-                "source": "new openEMS run; same model and mesh recipe",
+                "source": "openEMS run using the documented model and mesh recipe",
             })
             completed.add(key)
             rows.sort(key=lambda r: (float(r["step"]), int(r["zone"])))

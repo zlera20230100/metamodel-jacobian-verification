@@ -1,0 +1,4 @@
+benchmark,coverage_pct,false_trust_risk_pct,selective_evals,complete_fd_evals,sign_auc
+TMM near-saturated,95.9,1.5,0.90,22,0.906
+TMM stressed,74.0,13.4,5.72,22,0.724
+Heat/Poisson stressed,79.9,4.9,6.44,32,0.762

@@ -1,6 +1,6 @@
 # Reference-Calibrated Verification of Metamodel Design Jacobians under Finite Simulation Budgets
 
-Reproducibility code and data for the revised manuscript prepared for submission to
+This repository contains the code and data used in the manuscript submitted to
 *Simulation Modelling Practice and Theory*.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21005573.svg)](https://doi.org/10.5281/zenodo.21005573)
@@ -9,10 +9,10 @@ Reproducibility code and data for the revised manuscript prepared for submission
 Xuan Qin, Xuan Shi, Nimako Samuel Boateng, Bokai Huang, Shengjun Wu,
 Kai You, and Long Zhang (corresponding author: 20230100@huat.edu.cn)
 
-## Which files should be used?
+## Repository contents
 
-The **v2.0.1 SIMPAT revision package** is in
-[`simpat_revision/`](simpat_revision/). It contains the frozen arrays,
+The files for version 2.0.2 are in [`simpat_revision/`](simpat_revision/).
+This directory contains the archived arrays,
 reference-gradient verification, risk--coverage and finite-budget analyses,
 repeated calibration and training audits, matched-cost multistep optimization,
 openEMS step-ladder records, deterministic figure sources, and an evidence
@@ -23,7 +23,7 @@ available for provenance. They should not be used to reconstruct the revised
 SIMPAT claims. The immutable v1 tree is also available at tag
 [`v1.0.0`](https://github.com/zlera20230100/metamodel-jacobian-verification/tree/v1.0.0).
 
-## Evidence represented by v2.0.0
+## Scope of version 2.0.2
 
 - Three independently implemented reference regimes provide 3,580 external
   design-gradient components: near-saturated TMM, stressed TMM, and stressed
@@ -46,11 +46,11 @@ SIMPAT claims. The immutable v1 tree is also available at tag
 - In the matched-cost 20-step TMM audit, random, sign, SNR, and magnitude
   allocation each use exactly 240 reference calls per start. No deployable
   score ordering dominates random allocation across all tested trajectory
-  outcomes; this boundary result is retained rather than hidden.
-- The antenna step ladder is a failure-aware boundary: all six openEMS
-  aperture derivatives reverse sign at the largest tested step. These
-  derivatives are unresolved and excluded from AUC, calibration, risk,
-  cost-saving, and hybrid-gradient-error claims.
+  outcomes.
+- In the antenna step ladder, all six openEMS aperture derivatives reverse
+  sign at the largest tested step. These derivatives are unresolved and are
+  excluded from AUC, calibration, risk, cost-saving, and hybrid-gradient-error
+  claims.
 
 ## Quick reproduction
 
@@ -60,7 +60,7 @@ Use Python 3.11 or newer:
 cd simpat_revision
 python -m pip install -r requirements.txt
 
-# Frozen-result replay and score comparison
+# Reproduce the archived results and score comparison
 python analyze_external_baselines.py --analysis-dir . --package-dir .
 
 # Independent reference-gradient checks (3,580 components)
@@ -77,17 +77,18 @@ python training_repeat_audit.py
 python break_even_reference_cost.py
 python multistep_tmm_budget_optimization.py
 
-# Deterministic publication figure
-python graphical_abstract_simpat.py
+# Graphical abstract
+Rscript graphical_abstract_simpat.R
 ```
 
 The external-score analysis uses 10,000 query-cluster bootstrap replicates.
 Optional reconstruction of the small external surrogate ensembles is
 documented in [`simpat_revision/README.md`](simpat_revision/README.md).
 
-## Evidence tiers and limits
+## What can be reproduced
 
-1. **Frozen-result replay** requires no retraining or reference-simulator call.
+1. **Archived-result reproduction** requires no retraining or
+   reference-simulator call.
 2. **External-member reconstruction** retrains only the small public benchmark
    ensembles and checks them against frozen accepted artifacts.
 3. **Reference-label verification** reconstructs the TMM and heat queries and
@@ -109,7 +110,8 @@ Use the concept DOI for the latest version and all-version citation:
 
 | Release | Role | DOI |
 |---|---|---|
-| v2.0.1 | Current SIMPAT revision package | https://doi.org/10.5281/zenodo.21331830 |
+| v2.0.2 | Current SIMPAT package | https://doi.org/10.5281/zenodo.21352345 |
+| v2.0.1 | Previous SIMPAT package | https://doi.org/10.5281/zenodo.21331830 |
 | v2.0.0 | Previous SIMPAT revision package | https://doi.org/10.5281/zenodo.21331538 |
 | v1.0.0 | Legacy reproducibility snapshot | https://doi.org/10.5281/zenodo.21005574 |
 

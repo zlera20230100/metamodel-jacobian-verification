@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "If you use this software or data, cite the archived release below."
-title: "Reproducibility supplement for: Reference-Calibrated Verification of Metamodel Design Jacobians under Finite Simulation Budgets"
+title: "Reference-Calibrated Verification of Metamodel Design Jacobians under Finite Simulation Budgets: Code and Data"
 type: software
-version: 2.0.1
-date-released: 2026-07-12
-doi: 10.5281/zenodo.21331830
+version: 2.0.2
+date-released: 2026-07-14
+doi: 10.5281/zenodo.21352345
 repository-code: "https://github.com/zlera20230100/metamodel-jacobian-verification"
-url: "https://doi.org/10.5281/zenodo.21331830"
+url: "https://doi.org/10.5281/zenodo.21352345"
 license: MIT
 keywords:
   - metamodel verification

@@ -36,7 +36,6 @@ DATASET_FILES = {
 
 def parse_args() -> argparse.Namespace:
     here = Path(__file__).resolve().parent
-    default_repro = here.parent / "reproducibility_update"
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--dataset",
@@ -44,8 +43,8 @@ def parse_args() -> argparse.Namespace:
         default="all",
     )
     parser.add_argument("--worker", action="store_true")
-    parser.add_argument("--frozen-dir", type=Path, default=default_repro)
-    parser.add_argument("--out-dir", type=Path, default=default_repro)
+    parser.add_argument("--frozen-dir", type=Path, default=here)
+    parser.add_argument("--out-dir", type=Path, default=here)
     return parser.parse_args()
 
 
@@ -58,7 +57,7 @@ def file_sha256(path: Path) -> str:
 
 
 def roc_auc_binary(labels: np.ndarray, scores: np.ndarray) -> float:
-    """ROC AUC with average ranks for ties, avoiding a new runtime dependency."""
+    """ROC AUC with average ranks for ties, without an additional dependency."""
 
     from scipy.stats import rankdata
 

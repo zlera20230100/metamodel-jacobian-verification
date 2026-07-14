@@ -77,11 +77,11 @@ MATCHED_METHODS = (
 
 COLORS = {
     "all_autodiff": "#5C5C5C",
-    "complete_fd": "#2A5B8A",
-    "matched_random": "#B4C7D9",
-    "matched_sign_order": "#2F6B9A",
-    "matched_snr_order": "#5792C6",
-    "matched_magnitude_order": "#86B1D2",
+    "complete_fd": "#173F5F",
+    "matched_random": "#8B9298",
+    "matched_sign_order": "#3775BA",
+    "matched_snr_order": "#6B9AC4",
+    "matched_magnitude_order": "#A9C5DF",
     "calibrated_snr": "#3775BA",
     "calibrated_magnitude": "#6B9AC4",
 }
@@ -97,21 +97,24 @@ LINESTYLES = {
     "calibrated_magnitude": (0, (5, 2)),
 }
 
+MARKERS = {
+    "all_autodiff": "X",
+    "complete_fd": "D",
+    "matched_random": "o",
+    "matched_sign_order": "s",
+    "matched_snr_order": "^",
+    "matched_magnitude_order": "v",
+    "calibrated_snr": "^",
+    "calibrated_magnitude": "v",
+}
+
 
 def parse_args() -> argparse.Namespace:
     here = Path(__file__).resolve().parent
-    if here.name.lower() == "reproducibility_update":
-        default_data = here
-        default_out = here.parent / "analysis"
-        default_mirror = here
-    else:
-        default_data = here.parent / "reproducibility_update"
-        default_out = here
-        default_mirror = here.parent / "reproducibility_update"
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", type=Path, default=default_data)
-    parser.add_argument("--out-dir", type=Path, default=default_out)
-    parser.add_argument("--mirror-dir", type=Path, default=default_mirror)
+    parser.add_argument("--data-dir", type=Path, default=here)
+    parser.add_argument("--out-dir", type=Path, default=here)
+    parser.add_argument("--mirror-dir", type=Path, default=here)
     parser.add_argument("--starts", type=int, default=8)
     parser.add_argument("--iterations", type=int, default=20)
     parser.add_argument("--dimensionless-step", type=float, default=0.02)
@@ -475,6 +478,7 @@ def configure_plotting() -> None:
             "legend.frameon": False,
             "pdf.fonttype": 42,
             "ps.fonttype": 42,
+            "svg.fonttype": "none",
             "savefig.facecolor": "white",
         }
     )
@@ -486,49 +490,104 @@ def plot_results(trajectories: pd.DataFrame, summary: pd.DataFrame, out_dir: Pat
     matched_calls = int(matched_rows["median_verification_reference_calls"].iloc[0])
     iterations = int(matched_rows["iterations"].iloc[0])
     matched_checks = matched_calls // (2 * iterations)
-    fig = plt.figure(figsize=(7.25, 5.05))
-    grid = fig.add_gridspec(2, 2, height_ratios=(1.15, 1.0), hspace=0.48, wspace=0.38)
-    ax0 = fig.add_subplot(grid[0, :])
-    ax1 = fig.add_subplot(grid[1, 0])
-    ax2 = fig.add_subplot(grid[1, 1])
-    for method in PLOT_METHODS:
-        frame = trajectories[trajectories["method"] == method]
-        grouped = frame.groupby("iteration")["best_over_initial"]
-        x = np.array(sorted(frame["iteration"].unique()), dtype=int)
-        median = grouped.median().reindex(x).to_numpy()
-        q25 = grouped.quantile(0.25).reindex(x).to_numpy()
-        q75 = grouped.quantile(0.75).reindex(x).to_numpy()
-        ax0.plot(
-            x,
-            median,
-            color=COLORS[method],
-            linestyle=LINESTYLES[method],
-            lw=1.7,
-            label=METHOD_LABELS[method],
+    fig, axes = plt.subplots(2, 2, figsize=(7.25, 5.35))
+    ax0, ax1, ax2, ax3 = axes.ravel()
+
+    def draw_trajectories(
+        ax: plt.Axes,
+        methods: tuple[str, ...],
+        title: str,
+        labels: dict[str, str],
+        legend_columns: int,
+    ) -> None:
+        for method in methods:
+            frame = trajectories[trajectories["method"] == method]
+            grouped = frame.groupby("iteration")["best_over_initial"]
+            x = np.array(sorted(frame["iteration"].unique()), dtype=int)
+            median = grouped.median().reindex(x).to_numpy()
+            q25 = grouped.quantile(0.25).reindex(x).to_numpy()
+            q75 = grouped.quantile(0.75).reindex(x).to_numpy()
+            ax.plot(
+                x,
+                median,
+                color=COLORS[method],
+                linestyle=LINESTYLES[method],
+                lw=1.8,
+                marker=MARKERS[method],
+                markevery=(3, 4),
+                markersize=3.2,
+                markeredgecolor="#2E3B47",
+                markeredgewidth=0.4,
+                label=labels[method],
+            )
+            ax.fill_between(
+                x,
+                q25,
+                q75,
+                color=COLORS[method],
+                alpha=0.07,
+                linewidth=0,
+            )
+        ax.set_title(title, loc="left", pad=6)
+        ax.set_xlabel("Projected-gradient update")
+        ax.set_xlim(0, trajectories["iteration"].max())
+        ax.set_ylim(0, 1.05)
+        ax.set_xticks([0, 5, 10, 15, 20])
+        ax.grid(axis="y", color="#E3E3E3", lw=0.6, alpha=0.75)
+        ax.legend(
+            fontsize=5.8,
+            loc="upper right",
+            ncol=legend_columns,
+            handlelength=2.7,
+            columnspacing=0.9,
         )
-        ax0.fill_between(x, q25, q75, color=COLORS[method], alpha=0.10, linewidth=0)
-    ax0.set_title("(a) Matched-cost trajectories with zero- and full-cost endpoints", loc="left", pad=7)
-    ax0.set_xlabel("Projected-gradient update")
+
+    draw_trajectories(
+        ax0,
+        ("all_autodiff", "complete_fd"),
+        "(a) Zero- and full-cost endpoints",
+        {
+            "all_autodiff": "All autodiff (0 calls)",
+            "complete_fd": "Complete FD (440 calls)",
+        },
+        1,
+    )
     ax0.set_ylabel("Best reference objective / initial")
-    ax0.set_xlim(0, trajectories["iteration"].max())
-    ax0.grid(axis="y", color="#D9D9D9", lw=0.6, alpha=0.8)
-    ax0.legend(fontsize=6.7, loc="upper right", ncol=2)
+
+    draw_trajectories(
+        ax1,
+        MATCHED_METHODS,
+        f"(b) Matched trajectories: B = {matched_checks} ({matched_calls} calls)",
+        {
+            "matched_random": "Random",
+            "matched_sign_order": "Sign",
+            "matched_snr_order": "SNR",
+            "matched_magnitude_order": "Magnitude",
+        },
+        2,
+    )
 
     x_positions = np.arange(len(MATCHED_METHODS), dtype=float)
     for x, method in zip(x_positions, MATCHED_METHODS):
         row = summary[summary["method"] == method].iloc[0]
         best = row["median_best_over_initial"]
         final = row["median_final_over_initial"]
-        ax1.plot([x, x], [best, final], color=COLORS[method], lw=1.1, alpha=0.9)
-        ax1.scatter(x, best, s=36, marker="o", color=COLORS[method], edgecolor="white", linewidth=0.5, zorder=3)
-        ax1.scatter(x, final, s=38, marker="^", color=COLORS[method], edgecolor="white", linewidth=0.5, zorder=3)
-    ax1.set_title(f"(b) Strictly matched: {matched_calls} calls per start", loc="left", pad=7)
-    ax1.set_ylabel("Median objective / initial")
-    ax1.set_xticks(x_positions, ["Random", "Sign", "SNR", "Magnitude"], rotation=20, ha="right")
-    ax1.grid(axis="y", color="#D9D9D9", lw=0.6, alpha=0.8)
-    ax1.scatter([], [], s=30, marker="o", color="#6B6B6B", label="Best-so-far")
-    ax1.scatter([], [], s=32, marker="^", color="#6B6B6B", label="Final")
-    ax1.legend(fontsize=6.5, loc="upper left")
+        ax2.plot([x, x], [best, final], color=COLORS[method], lw=1.35, alpha=0.95)
+        ax2.scatter(x, best, s=42, marker="o", color=COLORS[method], edgecolor="#2E3B47", linewidth=0.65, zorder=3)
+        ax2.scatter(x, final, s=44, marker="^", color=COLORS[method], edgecolor="#2E3B47", linewidth=0.65, zorder=3)
+    ax2.set_title(f"(c) Matched endpoints: {matched_calls} calls", loc="left", pad=6)
+    ax2.set_ylabel("Median objective / initial")
+    ax2.set_xticks(x_positions, ["Random", "Sign", "SNR", "Magnitude"], rotation=20, ha="right")
+    ax2.grid(axis="y", color="#E3E3E3", lw=0.6, alpha=0.75)
+    ax2.scatter(
+        [], [], s=30, marker="o", facecolors="none", edgecolors="#333333",
+        linewidth=0.75, label="Best-so-far",
+    )
+    ax2.scatter(
+        [], [], s=32, marker="^", facecolors="none", edgecolors="#333333",
+        linewidth=0.75, label="Final",
+    )
+    ax2.legend(fontsize=6.2, loc="upper left", handletextpad=0.55)
 
     context_methods = (
         "all_autodiff",
@@ -537,32 +596,80 @@ def plot_results(trajectories: pd.DataFrame, summary: pd.DataFrame, out_dir: Pat
         "calibrated_magnitude",
         "complete_fd",
     )
+    context_points: dict[str, tuple[float, float]] = {}
     for method in context_methods:
         row = summary[summary["method"] == method].iloc[0]
-        ax2.scatter(
-            row["median_verification_reference_calls"],
-            row["median_best_over_initial"],
+        point = (
+            float(row["median_verification_reference_calls"]),
+            float(row["median_best_over_initial"]),
+        )
+        context_points[method] = point
+        ax3.scatter(
+            *point,
             s=38,
             color=COLORS[method],
-            edgecolor="white",
-            linewidth=0.5,
+            marker=MARKERS[method],
+            edgecolor="#2E3B47",
+            linewidth=0.65,
             zorder=3,
         )
-    ax2.annotate("All autodiff", (0, summary.loc[summary["method"] == "all_autodiff", "median_best_over_initial"].iloc[0]), xytext=(5, 4), textcoords="offset points", fontsize=6.2, color=COLORS["all_autodiff"])
-    ax2.annotate(f"Matched B = {matched_checks}\n(four rules)", (matched_calls, matched_rows["median_best_over_initial"].mean()), xytext=(-7, 8), textcoords="offset points", fontsize=6.2, ha="right", color="#4D6F8C")
-    variable_rows = summary[summary["method"].isin(("calibrated_snr", "calibrated_magnitude"))]
-    ax2.annotate("Variable calibrated", (variable_rows["median_verification_reference_calls"].mean(), variable_rows["median_best_over_initial"].mean()), xytext=(-5, 8), textcoords="offset points", fontsize=6.2, ha="right", color="#3775BA")
-    ax2.annotate("Complete FD", (440, summary.loc[summary["method"] == "complete_fd", "median_best_over_initial"].iloc[0]), xytext=(-5, 5), textcoords="offset points", fontsize=6.2, ha="right", color=COLORS["complete_fd"])
-    ax2.set_title("(c) Cost context", loc="left", pad=7)
-    ax2.set_xlabel("Verification reference calls")
-    ax2.set_ylabel("Median best objective / initial")
-    ax2.grid(axis="both", color="#D9D9D9", lw=0.6, alpha=0.8)
-    ax2.text(0.02, 0.97, "Objective monitoring is assessment-only", transform=ax2.transAxes, fontsize=6.1, color="#4D4D4D", va="top")
 
-    fig.subplots_adjust(left=0.09, right=0.985, bottom=0.11, top=0.95)
+    direct_labels = {
+        "all_autodiff": (16, 30, "All autodiff", "left"),
+        "matched_snr_order": (-16, 30, "SNR, B = 6", "right"),
+        "matched_sign_order": (-34, 0, "Sign, B = 6", "right"),
+        "matched_random": (-34, 0, "Random, B = 6", "right"),
+        "matched_magnitude_order": (-34, 0, "Magnitude, B = 6", "right"),
+        "calibrated_snr": (-16, 30, "Calibrated SNR", "right"),
+        "calibrated_magnitude": (-16, -30, "Calibrated\nmagnitude", "right"),
+        "complete_fd": (-34, 0, "Complete FD", "right"),
+    }
+    for method, (dx, dy, label, align) in direct_labels.items():
+        ax3.annotate(
+            label,
+            xy=context_points[method],
+            xytext=(dx, dy),
+            textcoords="offset points",
+            fontsize=6.0,
+            color="#333333",
+            ha=align,
+            va="center",
+            linespacing=0.92,
+            arrowprops={
+                "arrowstyle": "-",
+                "color": COLORS[method],
+                "lw": 0.65,
+                "shrinkA": 2,
+                "shrinkB": 3,
+            },
+        )
+    ax3.set_title("(d) Verification-cost context", loc="left", pad=6)
+    ax3.set_xlabel("Verification reference calls")
+    ax3.set_ylabel("Median best objective / initial")
+    ax3.set_xlim(-25, 465)
+    ax3.set_ylim(0.048, 0.122)
+    ax3.grid(axis="both", color="#E3E3E3", lw=0.6, alpha=0.75)
+    ax3.text(
+        0.02,
+        0.97,
+        "Monitoring is assessment-only",
+        transform=ax3.transAxes,
+        fontsize=5.8,
+        color="#4D4D4D",
+        va="top",
+    )
+
+    fig.subplots_adjust(left=0.09, right=0.985, bottom=0.105, top=0.96, hspace=0.42, wspace=0.36)
+    fig.savefig(out_dir / "fig_multistep_tmm_budget.svg", bbox_inches="tight", pad_inches=0.03)
     fig.savefig(out_dir / "fig_multistep_tmm_budget.pdf", bbox_inches="tight", pad_inches=0.03)
     fig.savefig(
         out_dir / "fig_multistep_tmm_budget.png",
+        dpi=300,
+        bbox_inches="tight",
+        pad_inches=0.03,
+    )
+    fig.savefig(
+        out_dir / "fig_multistep_tmm_budget.tiff",
         dpi=600,
         bbox_inches="tight",
         pad_inches=0.03,
@@ -670,8 +777,10 @@ def main() -> None:
         summary_path,
         matched_summary_path,
         protocol_path,
+        out_dir / "fig_multistep_tmm_budget.svg",
         out_dir / "fig_multistep_tmm_budget.pdf",
         out_dir / "fig_multistep_tmm_budget.png",
+        out_dir / "fig_multistep_tmm_budget.tiff",
     ]
     mirror(outputs, mirror_dir)
 
